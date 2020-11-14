@@ -1,0 +1,79 @@
+.startConversationDrawer{
+    height:100%;
+    width:100%;
+    position:absolute;
+    z-index:100;
+    display:flex;
+    flex-direction: column;
+}
+
+.startConversationDrawer__header{
+    height:12%;
+    display:flex;
+    align-items:flex-end;
+    padding:20px;
+    
+    h4{
+        font-size:1.4rem;
+    }
+}
+
+.startConversationDrawer__header .MuiSvgIcon-root{
+    margin-right:30px;
+    height:25px;
+    width:25px;
+    cursor:pointer;
+}
+
+.startConversationDrawer__body{
+    display:flex;
+    height:88%;
+    flex-direction:column;
+    justify-content:center;
+    overflow:auto;
+}
+
+.startConversationDrawer__body__chatList{
+    height:100%;
+    
+}
+
+.startConversationDrawer__body__user-info-wrapper{
+
+}
+
+.startConversationDrawer__body__user-info{
+    height:70px;
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+
+}
+
+.profileImage{
+    height:55px;
+    width:55px;
+    border-radius:100%;
+    margin-left:10px;
+    
+}
+
+.startConversationDrawer__body__user-info__name-and-status{
+    display:flex;
+    flex-direction: column;
+    margin-left:10px;
+    position:relative;
+    h5{
+        align-self:flex-start;
+        margin-top:3px;
+        margin-left:10px;
+        font-weight: normal;
+    }
+}
+
+.startConversationDrawer__body__user-info_last-seen{
+    position:absolute;
+    right:0;
+    top:0;
+    margin-right:10px;
+}

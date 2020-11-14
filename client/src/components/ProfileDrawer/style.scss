@@ -1,0 +1,114 @@
+.profileDrawer{
+    height:100%;
+    width:100%;
+    position:absolute;
+    z-index:100;
+    display:flex;
+    flex-direction: column;
+}
+
+.profileDrawer__header{
+    height:12%;
+    display:flex;
+    align-items:flex-end;
+    padding:20px;
+    
+    h4{
+        font-size:1.4rem;
+    }
+}
+
+.profileDrawer__header .MuiSvgIcon-root{
+    margin-right:30px;
+    height:25px;
+    width:25px;
+    cursor:pointer;
+}
+
+.profileDrawer__body{
+    display:flex;
+    height:88%;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+}
+
+
+.profileDrawer__body__profileImage{
+    border-radius:100%;
+    height:84%;
+    width:84%;
+}
+
+.profileDrawer__body .MuiSvgIcon-root{
+    height:100%;
+    width:100%;
+}
+
+.profileDrawer__body__image-container{
+    position:relative;
+   // background:red;
+    border-radius:100%;
+    padding:0px;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    overflow:hidden;
+    cursor:pointer;
+}
+.profileDrawer__body__image-container__upload-img{
+    position:absolute;
+    height:84%;
+    width:84%;
+    border-radius:100%;
+    z-index:100;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.profileDrawer__body__image-container__upload-img__text{
+    display:flex;
+    flex-direction:column;
+    margin-top:10px;
+}
+
+.profileDrawer__body__form{
+width:100%;
+}
+
+//INPUT BOX
+.inputBox{
+    width:100%;
+    height:100px;
+    margin-top:20px;
+    display:flex;
+    flex-direction: column;
+    padding:20px;
+    font-weight:505;
+}
+
+.inputBox__outer{
+    align-items: center;
+    position:relative;
+}
+.inputBox__input{
+    border:none;
+    outline:none;
+    margin-top:20px;
+    font-size:1.2rem;
+    width:100%;
+   // border-bottom: 1px solid black;
+}
+
+.inputBox__icon{
+    height:20px !important;
+    width:20px !important;
+    position:absolute;
+    right:10px;
+    top:14px;
+    cursor:pointer;
+}
+
+

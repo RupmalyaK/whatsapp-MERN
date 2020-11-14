@@ -1,0 +1,33 @@
+.chatSnippet{
+    display:flex;
+    padding:10px;
+    align-items:center;
+    justify-content:flex-start;
+    border-bottom:1px solid lightgray;
+    cursor:pointer;
+}
+
+.chatSnippet__image{
+    border-radius:100%;
+    height:50px;
+    width:50px;
+    background:red;
+    border:0px;
+}
+
+.chatSnippet__body{
+    display:flex;
+    flex-direction: column;
+    margin-left:20px;
+    
+}
+
+.chatSnippet__body__name{
+    font-size:1.4rem;
+    margin-bottom:2px;
+}
+
+.chatSnippet__body__lm{
+    font-size:0.8rem;
+}
+

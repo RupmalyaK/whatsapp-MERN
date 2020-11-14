@@ -1,0 +1,101 @@
+.sideBar{
+    flex:0.30;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    border-right:1px solid lightgray;
+    position:relative;
+    overflow:hidden;
+}
+
+.sideBar__header{
+    height:8%;
+    width:100%;
+    display:flex;
+    justify-content:space-between; 
+    align-items:center;
+    padding:20px;
+
+    
+}
+
+
+.sideBar__header__right{
+    width:100px;
+    height:100px;
+    display:flex;
+    justify-content: flex-end;
+    align-items:center;
+}
+.sideBar__header  .MuiSvgIcon-root{
+    cursor:pointer;
+}
+.sidebar__menu-icon-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:45px;
+    height:45px;
+    border-radius: 100%;
+    padding:20px;
+    position:relative;
+  
+}
+
+.sidebar__menu-icon-wrapper .MuiSvgIcon-root{
+    border-radius:100%;
+    height:30px;
+    width:30px;
+    position: absolute;
+    left:0px;
+    right:0px;
+    left:16%;
+   
+}
+
+.sideBar__header__left .MuiSvgIcon-root{
+    font-size:3rem;
+}
+
+.sideBar__header__right .MuiSvgIcon-root{
+    margin-right:10px;
+   
+}
+
+.sidebar__search-input-wrapper{
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+}
+.sidebar__search-input-wrapper .MuiSvgIcon-root{
+    position:absolute;
+    left:20px;
+    cursor:pointer;
+}
+
+.sidebar__search-input{
+    width:95%;
+    height:70%;
+    border-radius: 18px;
+    border:0px;
+    padding:10px 10px 10px 50px;
+   
+}
+.sidebar__search-input:focus{
+        outline: none;
+}
+
+.sideBar__chats{
+    width:100%;
+    height:100%;
+}
+
+.sideBar__add__button{
+    height:80px;
+    width:100%;
+    cursor:pointer;
+    font-size:1.5rem;
+    border:none;
+}
