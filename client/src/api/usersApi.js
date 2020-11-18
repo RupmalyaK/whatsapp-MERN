@@ -42,6 +42,46 @@ const PutRequest = (url, data) => {
   });
 };
 
+
+function PostRequest(url ,data){
+  return new Promise(function(resolve,reject){
+
+      let obj = {
+          url : url ,
+          data : data,
+          onSuccess: (resp)=>{
+              resolve(resp);
+          },
+          onError:(err) =>{
+              reject();
+              console.log('api error' , err);
+          }
+      }
+
+      Api.post(obj.url,obj.data,obj.onSuccess,obj.onError);
+
+  });
+}
+
+function DeleteRequest(url) {
+  return new Promise(function (resolve, reject) {
+
+      let obj = {
+          url: url,
+          onSuccess: (resp) => {
+              resolve(resp);
+          },
+          onError: (err) => {
+              reject();
+              console.log('api error', err);
+          }
+      }
+
+      Api.delete(obj.url, obj.onSuccess, obj.onError);
+
+  });
+}
+
 const GetWithCancel = (url) => {
   return new Promise(function (resolve, reject) {
     const obj = {

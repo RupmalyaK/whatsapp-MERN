@@ -30,9 +30,9 @@
     "stripe": "6.28.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
-    "@babel/node": "^7.8.7",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.0.0",
     "@babel/preset-env": "^7.9.6",
     "concurrently": "^4.0.1",
     "dotenv": "^7.0.0"
