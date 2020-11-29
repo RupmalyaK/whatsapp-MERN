@@ -77,7 +77,7 @@ function DeleteRequest(url) {
           }
       }
 
-      Api.delete(obj.url, obj.onSuccess, obj.onError);
+      Api.deleteApi(obj.url, obj.onSuccess, obj.onError);
 
   });
 }
