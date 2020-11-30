@@ -10,6 +10,7 @@ import {
   Create as PencilIcon,
   Check as CheckIcon,
 } from "@material-ui/icons";
+import {updateUserAsync} from "../../store/actions/userAction";
 import ImageFromBuffer from "../ImageFromBuffer";
 
 const InputBox = (props) => {
@@ -19,6 +20,8 @@ const InputBox = (props) => {
   const [isActive, setIsActive] = useState(false);
   const { background, icon } = theme.palette;
   const inputRef = useRef(null);
+
+
 
   useEffect(() => {
     isActive && inputRef.current.focus();
@@ -59,7 +62,8 @@ const InputBox = (props) => {
           <CheckIcon
             className="inputBox__icon"
             onClick={(e) => {
-              handleSubmit(value);
+          
+              handleSubmit(currentValue);
               setIsActive(false);
             }}
           />
@@ -86,6 +90,7 @@ const StartConversationDrawer = (props) => {
   const formController = useAnimation();
   const menuRef = useRef(null);
   const menuControl = useAnimation();
+  const [picFile, setPicFile] = useState(null);
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -256,12 +261,17 @@ const StartConversationDrawer = (props) => {
           <InputBox
             label="Your Name"
             value={displayName}
-            handleSubmit={(value) => {}}
+            handleSubmit={(value) => {
+              dispatch(updateUserAsync("display-name", {displayName:value}));
+            }}
             isDisable={!openDrawer}
           />
           <InputBox
             label="About"
-            handleSubmit={(value) => {}}
+            value={status}
+            handleSubmit={(value) => {
+              dispatch(updateUserAsync("status", {status:value}));
+            }}
             isDisable={!openDrawer}
           />
         </motion.div>

@@ -9,6 +9,10 @@ const INITIAL_STATE = {
   accountCreatedAt: "",
   searchedUsers: [],
   id: "",
+  status: "",
+  updatingDisplayName: false,
+  updatingStatus: false,
+  updatingPhoto: false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -23,6 +27,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         chatRooms,
         lastSeen,
         createdAt,
+        status,
         _id: id,
       } = payLoad;
       return {
@@ -34,6 +39,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         lastSeen,
         accountCreatedAt: createdAt,
         id,
+        status,
       };
     }
     case actionTypes.GET_USERS_BY_NAME:
@@ -56,6 +62,22 @@ const userReducer = (state = INITIAL_STATE, action) => {
       chatRooms.unshift(newChatInRoom);
       return { ...state, chatRooms };
     }
+
+    case actionTypes.SET_UPDATING_DISPLAY_NAME:
+      return { ...state, updatingDisplayName: true };
+    case actionTypes.UNSET_UPDATING_DISPLAY_NAME:
+      return { ...state, updatingDisplayName: false };
+
+    case actionTypes.SET_UPDATING_PHOTO:
+      return { ...state, updatingPhoto: true };
+    case actionTypes.UNSET_UPDATING_PHOTO:
+      return { ...state, updatingPhoto: false };
+
+    case actionTypes.SET_UPDATING_STATUS:
+      return { ...state, updatingStatus: true };
+    case actionTypes.UNSET_UPDATING_STATUS:
+      return { ...state, updatingStatus: false };
+
     default:
       return state;
   }

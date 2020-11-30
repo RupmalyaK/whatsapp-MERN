@@ -77,3 +77,37 @@ export const signOut = () => {
     );
   };
 };
+
+export const updateUserAsync = (propToUpdate, user) => {
+  return async (dispatch, getState) => {
+    try {
+      const userId = getState().user.id;
+      switch (propToUpdate) {
+        case "photo":
+          dispatch(createAction(actionTypes.SET_UPDATING_PHOTO));
+          break;
+        case "status":
+          dispatch(createAction(actionTypes.SET_UPDATING_STATUS));
+          break;
+        case "display-name":
+          dispatch(createAction(actionTypes.SET_UPDATING_DISPLAY_NAME));
+          break;
+      }
+      const newUser = await usersApi.updateUserById(userId, user);
+      dispatch(createAction(actionTypes.SET_USER_DETAIL, newUser));
+      switch (propToUpdate) {
+        case "photo":
+          dispatch(createAction(actionTypes.UNSET_UPDATING_PHOTO));
+          break;
+        case "status":
+          dispatch(createAction(actionTypes.UNSET_UPDATING_STATUS));
+          break;
+        case "display-name":
+          dispatch(createAction(actionTypes.UNSET_UPDATING_DISPLAY_NAME));
+          break;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};

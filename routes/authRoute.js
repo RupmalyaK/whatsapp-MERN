@@ -47,6 +47,7 @@ router.post(
           data:profilePic.buffer,
           contentType:profilePic.mimetype,
         },
+        status:"Hey there! I am using WhatsApp."
       });
       const accessToken = jwt.sign(
         { email, password },

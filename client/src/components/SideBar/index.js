@@ -23,6 +23,7 @@ const SideBar = (props) => {
   const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
   const [isSidebarDropdownOpen, setIsSidebarDropdownOpen] = useState(false);
   const dropDownRef = useRef(); 
+
   const theme = useTheme();
   const { chatRooms, id: userId, profileImage } = useSelector(
     (state) => state.user
@@ -79,6 +80,8 @@ const SideBar = (props) => {
     });
     return RoomComponents;
   };
+
+  
 
   return (
     <>
