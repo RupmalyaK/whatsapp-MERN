@@ -19,7 +19,7 @@ const InputBox = (props) => {
   const [isActive, setIsActive] = useState(false);
   const { background, icon } = theme.palette;
   const inputRef = useRef(null);
-  
+
   useEffect(() => {
     isActive && inputRef.current.focus();
   });
@@ -89,44 +89,42 @@ const StartConversationDrawer = (props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  const menuHeight = 150;
+  const menuHeight = 90;
   const menuWidth = 150;
 
-
   const { background, icon } = theme.palette;
- 
+
   const openMenuAnm = async () => {
-    await menuControl.set({scale:0,opacity:0})
-    await menuControl.start({scale:1,opacity:1});
-  }
+    await menuControl.set({ scale: 0, opacity: 0 });
+    await menuControl.start({ scale: 1, opacity: 1 });
+  };
   const closeMenuAnm = async () => {
-    await menuControl.start({scale:0,opacity:0});
-  }
+    await menuControl.start({ scale: 0, opacity: 0 });
+  };
 
   useEffect(() => {
     profileImageClickPos ? openMenuAnm() : closeMenuAnm();
-  }, [profileImageClickPos])
+  }, [profileImageClickPos]);
 
   useEffect(() => {
-    document.addEventListener("click", e => {
-     if(menuRef.current && !menuRef.current.contains(e.target))
-       {
-         setProfileImageClickPos(null);
-       }
-   
-     });
+    const checkClickOutsideBox =  (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setProfileImageClickPos(null);
+      }
+    }
+    
+    document.addEventListener("click",checkClickOutsideBox);
 
-     const onUnmount = () => {
-      document.removeEventListener("click");
-    } 
+    const onUnmount = () => {
+      document.removeEventListener("click",checkClickOutsideBox);
+    };
     return onUnmount;
-  }
-  , [])
+  }, []);
 
   const getMouseClickPos = (e) => {
     const currentTargetRect = e.currentTarget.getBoundingClientRect();
-    return [e.clientX   , e.clientY   ]
-  }
+    return [e.clientX, e.clientY];
+  };
 
   const drawerOpeningSequence = async () => {
     await drawerControl.start({ x: 0, transition: { duration: "0.5" } });
@@ -186,9 +184,7 @@ const StartConversationDrawer = (props) => {
           animate={profileImageContainerController}
           onMouseEnter={(e) => setProfileImageHover(true)}
           onMouseLeave={(e) => setProfileImageHover(false)}
-          onClick={(e) =>
-            setProfileImageClickPos(getMouseClickPos(e))
-          }
+          onClick={(e) => setProfileImageClickPos(getMouseClickPos(e))}
           ref={menuRef}
         >
           {(!profileImage || profileImageHover || profileImageClickPos) && (
@@ -240,14 +236,17 @@ const StartConversationDrawer = (props) => {
             style={{
               left: profileImageClickPos[0] + "px",
               top: profileImageClickPos[1] + "px",
-              height:menuHeight + "px",
-              width:menuWidth + "px",
-              background:background.siderBarChatListBackground
+              height: menuHeight + "px",
+              width: menuWidth + "px",
+              background: background.siderBarChatListBackground,
             }}
-            initial={{opacity:0,scale:0}}
+            initial={{ opacity: 0, scale: 0 }}
             animate={menuControl}
-            
-          ></motion.div>
+
+          >
+            <div className="pb-2 pt-3 pl-3" style={{cursor:"pointer"}}>Upload Photo</div>
+            <div className="pb-2 pt-3 pl-3" style={{cursor:"pointer"}}>Remove Photo</div>
+          </motion.div>
         )}
         <motion.div
           className="profileDrawer__body__form"

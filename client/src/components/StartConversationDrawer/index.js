@@ -43,6 +43,10 @@ const StartConversationDrawer = (props) => {
   const showInactiveChatRooms = () => {
  
     const inactiveRoomsComponents = chatRooms.map((room,index) => {
+      if(!room.chats)
+        {
+          return <></> ;
+        }
       if (room.chats.length === 0) {
         const otherUserInfo =
           id === room.users[0]._id ? room.users[1] : room.users[0];

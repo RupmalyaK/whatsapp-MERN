@@ -22,23 +22,20 @@ export const signUpAsync = (formData) => {
 
 export const signInAsync = (email, password) => {
   //alert("hello");
-  return async dispatch => {
+  return async (dispatch) => {
     alert(email);
-    try{
-    const user = await authApi.login({email,password});
-    cookies.set("accesToken", user.accessToken, { expires: 365, path: "/" });
-    dispatch(createAction(actionTypes.SET_USER_DETAIL, user));
+    try {
+      const user = await authApi.login({ email, password });
+      cookies.set("accesToken", user.accessToken, { expires: 365, path: "/" });
+      dispatch(createAction(actionTypes.SET_USER_DETAIL, user));
+    } catch (err) {
+      console.log(err);
     }
-    catch(err)
-      {
-        console.log(err);
-      }
-  }
-}
+  };
+};
 export const getUsersByName = (searchString) => {
   return async (dispatch) => {
     try {
-    
       if (!searchString) {
         dispatch(createAction(actionTypes.GET_USERS_BY_NAME, []));
         return;
@@ -55,12 +52,28 @@ export const getUserDetail = () => {
   return async (dispatch, getState) => {
     const userId = getState().user.id;
     try {
-    
       const user = await usersApi.getUserDetail(userId);
-      dispatch(createAction(actionTypes.SET_USER_DETAIL,user));
+      dispatch(createAction(actionTypes.SET_USER_DETAIL, user));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
+export const signOut = () => {
+  return async (dispatch) => {
+    cookies.remove("accessToken");
+    dispatch(
+      createAction(actionTypes.SET_USER_DETAIL, {
+        displayName: "",
+        profileImage: null,
+        email: "",
+        chatRooms: null,
+        lastSeen: null,
+        accountCreatedAt: "",
+        searchedUsers: [],
+        id: "",
+      })
+    );
+  };
+};
