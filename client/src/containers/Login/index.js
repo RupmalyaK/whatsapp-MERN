@@ -25,10 +25,10 @@ const Login = (props) => {
     event.preventDefault();
     const { displayName , email, password, profileImageInput} = event.target.elements;
     const formData = new FormData();
-    formData.append("displayName",displayName.value);
-    formData.append("email",email.value);
-    formData.append("password",password.value);
-    formData.append("profilePic",profileImageInput.files[0]);
+    formData.append("displayName", displayName.value);
+    formData.append("email", email.value);
+    formData.append("password", password.value);
+    formData.append("profilePic", profileImageInput.files[0]);
     dispatch(signUpAsync(formData));
   }
   const onClick = () => setToggle(!toggle);
@@ -37,33 +37,38 @@ const Login = (props) => {
      history.push('/');
      return (<></>);
   }
-  return toggle ? (
-    <div className='container'>
-      <div className='forms-container'>
-        <div className='signin-signup'>
-          <Signin onSubmit={handleLogin} />
-        </div>
-      </div>
+  // return toggle ? (
+  //   <div className='container'>
+  //     <div className='forms-container'>
+  //       <div className='signin-signup'>
+  //         <Signin onSubmit={handleLogin} />
+  //       </div>
+  //     </div>
 
-      <div className='panels-container'>
-        <LeftPanel click={onClick} />
-        <RightPanel click={onClick} />
-      </div>
+  //     <div className='panels-container'>
+  //       <LeftPanel click={onClick} />
+  //       <RightPanel click={onClick} />
+  //     </div>
+  //   </div>
+  // ) : (
+  //     <div className='container sign-up-mode'>
+  //       <div className='forms-container'>
+  //         <div className='signin-signup'>
+  //           <SignUp onSubmit={handleSignUp}  />
+  //         </div>
+  //       </div>
+
+  //     <div className='panels-container'>
+  //         <LeftPanel click={onClick} />
+  //         <RightPanel click={onClick} />
+  // </div>
+  //     </div>
+  //   );
+  return(
+    <div>
+      <SignUp onSubmit={handleSignUp}/>
     </div>
-  ) : (
-      <div className='container sign-up-mode'>
-        <div className='forms-container'>
-          <div className='signin-signup'>
-            <SignUp onSubmit={handleSignUp}  />
-          </div>
-        </div>
-
-      <div className='panels-container'>
-          <LeftPanel click={onClick} />
-          <RightPanel click={onClick} />
-  </div>
-      </div>
-    );
+  )
 };
 
 export default Login;
