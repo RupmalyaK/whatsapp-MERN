@@ -31,6 +31,11 @@ const userSchema = new Schema(
       type: [{ type: Schema.Types.ObjectId, ref: "chatRoom" }],
       default: [],
     },
+    status: {
+      type: String,
+      maxLength: 120,
+      required: true,
+    },
     lastSeen: {
       type: Date,
       default: Date.now(),

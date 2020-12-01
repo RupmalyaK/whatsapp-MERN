@@ -9,6 +9,11 @@ export const getUsersByName = (searchString) => {
   return GetWithCancel(url);
 };
 
+export const updateUserById = (userId, user) => {
+ const url = `/users/updateuser/${userId}`;
+ return PutRequest(url,user);
+}
+
 const GetRequest = (url) => {
   return new Promise(function (resolve, reject) {
     const obj = {

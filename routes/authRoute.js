@@ -47,6 +47,7 @@ router.post(
           data:profilePic.buffer,
           contentType:profilePic.mimetype,
         },
+        status:"Hey there! I am using WhatsApp."
       });
       const accessToken = jwt.sign(
         { email, password },
@@ -71,7 +72,14 @@ router.post(
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email }).populate({
+      path: "chatRooms",
+      model: "chatRoom",
+      populate: {
+        path: "users",
+        model: "user",
+      },
+    });
     if (!user) {
       throw "User with that email does not exist";
     }
