@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const INITIAL_STATE = {
+  prevDisplayName:"",
   displayName: "",
   profileImage: null,
   email: "",
@@ -9,6 +10,7 @@ const INITIAL_STATE = {
   accountCreatedAt: "",
   searchedUsers: [],
   id: "",
+  prevStatus:"",
   status: "",
   updatingDisplayName: false,
   updatingStatus: false,
@@ -29,6 +31,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         createdAt,
         status,
         _id: id,
+        prevStatus,
+        prevDisplayName,
       } = payLoad;
       return {
         ...state,
@@ -40,6 +44,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         accountCreatedAt: createdAt,
         id,
         status,
+        prevStatus,
+        prevDisplayName,
       };
     }
     case actionTypes.GET_USERS_BY_NAME:

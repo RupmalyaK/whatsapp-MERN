@@ -81,7 +81,7 @@ export const signOut = () => {
 export const updateUserAsync = (propToUpdate, user) => {
   return async (dispatch, getState) => {
     try {
-      const userId = getState().user.id;
+      const {id:userId, ...otherProps} = getState().user;
       switch (propToUpdate) {
         case "photo":
           dispatch(createAction(actionTypes.SET_UPDATING_PHOTO));
@@ -94,6 +94,8 @@ export const updateUserAsync = (propToUpdate, user) => {
           break;
       }
       const newUser = await usersApi.updateUserById(userId, user);
+      newUser.prevStatus = otherProps.status || "";
+      newUser.prevDisplayName = otherProps.displayName || "";
       dispatch(createAction(actionTypes.SET_USER_DETAIL, newUser));
       switch (propToUpdate) {
         case "photo":
@@ -111,3 +113,18 @@ export const updateUserAsync = (propToUpdate, user) => {
     }
   };
 };
+
+export const undoUserUpdateAsync = (propsToUndo) => {
+  return async (dispatch,getState) => {
+    const {prevStatus,prevDisplayName} = getState().user; 
+    switch(propsToUndo)
+      {
+        case "display-name":
+          dispatch(updateUserAsync("display-name",{displayName:prevDisplayName}));
+          break;
+        case "status":
+          dispatch(updateUserAsync("status",{displayName:prevDisplayName}));
+          break;
+      }
+  }
+}

@@ -15,12 +15,15 @@ export const lightTheme = {
             uploadPicOverlayBackground:"hsla(0,0%,40%,0.8)",
             profileDrawerBackground:"#ededed",
             headerDarkBackground:"#009688",
+            notificationBackground:"rgba(0,0,0,0.82)",
         },
         icon:{
             hederIconColor:"#919191",
         },
         text:{
             primaryStrong:"#000",
+            inverseStrong:"#fff",
+            notificationHighlight:"#ff0",
         }  
         
     },

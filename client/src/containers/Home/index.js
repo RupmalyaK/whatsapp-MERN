@@ -7,6 +7,7 @@ import { lightTheme, darkTheme } from "../../utils/theme.js";
 import SideBar from "../../components/SideBar";
 import ChatRoom from "../../components/ChatRoom";
 import {useHistory} from "react-router-dom";
+import NotificationContiner from "../../components/Notification";
 import "./style.css";
 
 const Home = () => {
@@ -44,6 +45,7 @@ const Home = () => {
         >
           <SideBar  />
           <ChatRoom />
+          <NotificationContiner />
         </div>
       </div>
     </ThemeProvider>
