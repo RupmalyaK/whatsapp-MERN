@@ -123,7 +123,7 @@ export const undoUserUpdateAsync = (propsToUndo) => {
           dispatch(updateUserAsync("display-name",{displayName:prevDisplayName}));
           break;
         case "status":
-          dispatch(updateUserAsync("status",{displayName:prevDisplayName}));
+          dispatch(updateUserAsync("status",{status:prevStatus}));
           break;
       }
   }

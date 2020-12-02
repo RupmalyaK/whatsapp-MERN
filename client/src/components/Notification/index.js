@@ -5,7 +5,9 @@ import { useTheme } from "@material-ui/core";
 import { motion, useAnimation } from "framer-motion";
 import { Clear as ClearIcon } from "@material-ui/icons";
 import {undoUserUpdateAsync} from "../../store/actions/userAction";
+import { SET_UPDATING_DISPLAY_NAME } from "../../store/actions/actionTypes";
 
+let displayAnmTimeOutId,statusAnmTimeOutId = null; 
 const NotificationBox = (props) => {
   const { children,undo,showUndoButton } = props;
   const { background, text } = useTheme().palette;
@@ -42,7 +44,10 @@ const NotificationContainer = (props) => {
   const firstRender2 = useRef(true);
   const notificationBoxController = useAnimation();
   const dispatch = useDispatch(); 
-
+  const [isDisplayNameUndoing , setIsDisplayNameUndoing] = useState(false);
+  const [isStatusUndoing, setIsStatusUndoing] = useState(false);
+  
+  //DISPLAY NAME EFFECTS
   useLayoutEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
@@ -52,16 +57,27 @@ const NotificationContainer = (props) => {
       notificationBoxOpenAnm();
       return;
     }
+  
+    if(isDisplayNameUndoing)
+      {
+        clearInterval(displayAnmTimeOutId);
+        setIsDisplayNameUndoing(false);
+        return;
+      }
     if (!firstRender.current && !updatingDisplayName) {
       setUpdatedDisplayName(true);
-      setTimeout(() => {
+      displayAnmTimeOutId = setTimeout(() => {
         setUpdatedDisplayName(false);
         notificationBoxCloseAnm();
-      }, 3000);
+        displayAnmTimeOutId = null;
+      }, 10000);
       return;
-    }
+    }  
+
   }, [firstRender, updatingDisplayName]);
 
+
+  //STATUS EFFECTS
   useLayoutEffect(() => {
     if (firstRender2.current) {
       firstRender2.current = false;
@@ -71,11 +87,17 @@ const NotificationContainer = (props) => {
       notificationBoxOpenAnm();
       return;
     }
+    if(isStatusUndoing)
+      {
+        clearInterval(displayAnmTimeOutId);
+        setIsStatusUndoing(false);
+        return;
+      }
     if (!firstRender2.current && !updatingStatus) {
       setUpdatedStatus(true);
-      setTimeout(() => {
-        setUpdatedStatus(false);
+      statusAnmTimeOutId = setTimeout(() => {
         notificationBoxCloseAnm();
+        setUpdatedStatus(false);
       }, 3000);
       return;
     }
@@ -88,7 +110,7 @@ const NotificationContainer = (props) => {
   const notificationBoxCloseAnm = async () => {
     await notificationBoxController.start({ y: 20, opacity: 0 });
   };
-
+  console.log("CHECK THIS OUT", updatingDisplayName);
   return (
     <motion.div className="NotificationContainer">
       <motion.div
@@ -97,19 +119,27 @@ const NotificationContainer = (props) => {
         animate={notificationBoxController}
       >
         {(updatingDisplayName || updatedDisplayName) && (
-          <NotificationBox showUndoButton={updatedDisplayName}>
+          <NotificationBox showUndoButton={updatedDisplayName} undo={e => {
+            setUpdatedDisplayName(false);
+            setIsDisplayNameUndoing(true);
+            dispatch(undoUserUpdateAsync("display-name"));
+          }}>
             {updatedDisplayName ? "Your name changed" : "Changing your name"}
           </NotificationBox>
         )}
       </motion.div>
-
+  
       <motion.div
         className="NotificationContainer__NotificationBoxContainer"
         initial={{ y: 20, opacity: 0 }}
         animate={notificationBoxController}
       >
         {(updatingStatus || updatedStatus) && (
-          <NotificationBox showUndoButton={updatedStatus}>
+          <NotificationBox showUndoButton={updatedStatus}  undo={e => {
+            setUpdatedStatus(false);
+            setIsStatusUndoing(true);
+            dispatch(undoUserUpdateAsync("status"));
+          }}>
             {updatedStatus ? "About changed" : "Changing about..."}
           </NotificationBox>
         )}

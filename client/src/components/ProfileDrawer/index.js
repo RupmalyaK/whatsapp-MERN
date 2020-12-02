@@ -21,8 +21,6 @@ const InputBox = (props) => {
   const { background, icon } = theme.palette;
   const inputRef = useRef(null);
 
-
-
   useEffect(() => {
     isActive && inputRef.current.focus();
   });
@@ -30,6 +28,10 @@ const InputBox = (props) => {
   useEffect(() => {
     isDisable && setIsActive(false);
   }, [isDisable]);
+
+  useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
 
   return (
     <div
@@ -93,7 +95,7 @@ const StartConversationDrawer = (props) => {
   const [picFile, setPicFile] = useState(null);
   const dispatch = useDispatch();
   const theme = useTheme();
-
+  
   const menuHeight = 90;
   const menuWidth = 150;
 
@@ -258,6 +260,7 @@ const StartConversationDrawer = (props) => {
           initial={{ opacity: 0, y: -50 }}
           animate={formController}
         >
+
           <InputBox
             label="Your Name"
             value={displayName}
