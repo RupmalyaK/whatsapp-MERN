@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import "./Signin.scss";
 
-const Signin = ({ onSubmit }) => {
+
+const Signin = ({ onSubmit,onChangePage }) => {
   return (
     // <form onSubmit={onSubmit} className='sign-in-form'>
     //   <h2 className='title'>Sign in</h2>
@@ -23,7 +26,7 @@ const Signin = ({ onSubmit }) => {
         <div className="__left_side">
           <div className="__user_image">
           </div>
-          <h3>Create Account</h3>
+          <h3>Sign In Your Account</h3>
           <p>Create a new account</p>
           <div className="__form">
               <form onSubmit={onSubmit}>
@@ -45,7 +48,7 @@ const Signin = ({ onSubmit }) => {
             Objectively benchmark empowered collaboration and idea-sharing via
             focused e-commerce. Continually foster viral.
           </p>
-          <button>Sign In</button>
+          <button onClick={onChangePage}>Sign Up</button>
 
           </div>
         </div>

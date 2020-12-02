@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import profileIcon from "../../assets/images/profile-icon.svg";
 import "./Signup.scss";
+import { Link } from 'react-router-dom';
+
 const user = "https://galileoenrichment.com/wp-content/uploads/2020/03/man.png";
 
-const SignUp = ({ onSubmit }) => {
+const SignUp = ({ onSubmit,onChangePage }) => {
   const [profileImage, setProfileImage] = useState(null);
   const [passwordShown, setPasswordShown] = useState(false);
 
@@ -47,7 +49,19 @@ const SignUp = ({ onSubmit }) => {
           <div className="__user_image">
             <label for="file-input">
               <img type="file" src={profileImage || profileIcon} alt="" />
-            
+              <input
+                id="file-input"
+                type="file"
+                placeholder="Profile icon"
+                name="profileImageInput"
+                accept="image/*"
+                onChange={(e) =>
+                  e.target.files[0]
+                    ? setProfileImage(URL.createObjectURL(e.target.files[0]))
+                    : setProfileImage(null)
+                }
+              />
+
             </label>
           </div>
           <h3>Create Account</h3>
@@ -68,21 +82,9 @@ const SignUp = ({ onSubmit }) => {
                 name="confirmPassword"
                 placeholder="Confirm Password"
               />
-  <input
-                id="file-input"
-                type="file"
-                placeholder="Profile icon"
-                name="profileImageInput"
-                accept="image/*"
-                onChange={(e) =>
-                  e.target.files[0]
-                    ? setProfileImage(URL.createObjectURL(e.target.files[0]))
-                    : setProfileImage(null)
-                }
-              />
               {/* <label htmlFor="" onClick={togglePasswordVisiblity}>show</label> */}
               <p>
-                <a href="">Forget password?</a>
+                <a  href="">Forget password?</a>
               </p>
               <button type="submit">Submit</button>
             </form>
@@ -96,7 +98,8 @@ const SignUp = ({ onSubmit }) => {
               Objectively benchmark empowered collaboration and idea-sharing via
               focused e-commerce. Continually foster viral.
             </p>
-            <button type="submit">Sign In</button>
+            <button type="submit" onClick={onChangePage}>Sign In</button>
+
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import React from "react";
 const Home = React.lazy(() => import("../containers/Home"));
 const SignInSignUp = React.lazy(() => import("../containers/Login"));
 const Register = React.lazy(() => import("../components/OwnRegister/Register"));
+const SignIn = React.lazy(() => import("../components/Signin"));
 
 
 const routes = [
@@ -23,6 +24,12 @@ const routes = [
     exact: true,
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/signin",
+    exact: true,
+    name: "SignIn",
+    component: SignIn,
   },
 
 ];

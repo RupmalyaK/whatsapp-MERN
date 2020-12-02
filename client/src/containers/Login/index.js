@@ -14,6 +14,7 @@ const Login = (props) => {
   const dispatch = useDispatch(); 
   const {email:userExist} = useSelector(state => state.user);
   const history = useHistory();
+  const [isSigninPage, setIsSignInPage ] = useState(true);  
 
   const handleLogin = e => {
     e.preventDefault();
@@ -31,7 +32,7 @@ const Login = (props) => {
     formData.append("profilePic", profileImageInput.files[0]);
     dispatch(signUpAsync(formData));
   }
-  const onClick = () => setToggle(!toggle);
+  // const onClick = () => setToggle(!toggle);
   //const { currentUser } = null;
   if (userExist) {
      history.push('/');
@@ -66,7 +67,8 @@ const Login = (props) => {
   //   );
   return(
     <div>
-      <SignUp onSubmit={handleSignUp}/>
+      {isSigninPage ?  <Signin onSubmit={handleLogin} onChangePage={() => setIsSignInPage(false)} /> :   <SignUp onSubmit={handleSignUp} onChangePage={() => setIsSignInPage(true)}/> }
+    
     </div>
   )
 };
