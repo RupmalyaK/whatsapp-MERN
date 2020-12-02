@@ -81,7 +81,7 @@ const NotificationContainer = (props) => {
         setUpdatedDisplayName(false);
         notificationBoxCloseAnm("display-name");
         displayAnmTimeOutId = null;
-      }, 3000);
+      }, 5000);
       return;
     }
   }, [firstRender, updatingDisplayName]);
@@ -106,7 +106,7 @@ const NotificationContainer = (props) => {
       statusAnmTimeOutId = setTimeout(() => {
         notificationBoxCloseAnm("status");
         setUpdatedStatus(false);
-      }, 3000);
+      }, 5000);
       return;
     }
   }, [firstRender2, updatingStatus]);
@@ -128,7 +128,7 @@ const NotificationContainer = (props) => {
       setTimeout(() => {
         notificationBoxCloseAnm("photo");
         setUpdatedPhoto(false);
-      }, 3000);
+      }, 5000);
       return;
     }
   }, [firstRender3, updatingPhoto]);

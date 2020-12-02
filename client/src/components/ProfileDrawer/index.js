@@ -170,7 +170,7 @@ const ProfileDrawer = (props) => {
     }
     drawerClosingSequence();
   }, [openDrawer]);
-  console.log("check this out", currentProfileImage)
+
   const handleImageUpload = e => {
     if(e.target.files[0])
       {
@@ -308,6 +308,10 @@ const ProfileDrawer = (props) => {
             label="Your Name"
             value={displayName}
             handleSubmit={(value) => {
+              if(value === displayName)
+                {
+                  return;
+                }
               dispatch(updateUserAsync("display-name", { displayName: value }));
             }}
             isDisable={!openDrawer}
@@ -318,6 +322,10 @@ const ProfileDrawer = (props) => {
             label="About"
             value={status}
             handleSubmit={(value) => {
+              if(value === status)
+                {
+                  return;
+                }
               dispatch(updateUserAsync("status", { status: value }));
             }}
             isDisable={!openDrawer}
