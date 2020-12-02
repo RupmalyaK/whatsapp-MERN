@@ -112,6 +112,12 @@ width:100%;
     cursor:pointer;
 }
 
+.inputBox__char-left{
+ position:absolute;
+ right:40px;
+ top:14px; 
+}
+
 .profileDrawer__body__image-container__upload-img__menu{
 
     position:fixed;
@@ -122,4 +128,6 @@ width:100%;
 .SidebarDropdown__container__item{
     
 }
+
+
 

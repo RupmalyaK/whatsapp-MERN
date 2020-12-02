@@ -96,13 +96,18 @@ router.put(
       }
       console.log("this is displayName", displayName);
       user.displayName = displayName || user.displayName;
+      console.log(req.file);
       user.status = status || user.status;
       if (req.file ? req.file.fieldname === "profileImage" : false) {
-        user.profileImage = req.file || user.profileImage;
+        const profileImage = req.file;
+        user.profileImage = {
+          data:profileImage.buffer,
+          contentType:profileImage.mimetype,
+        };
       } else if (removeProfileImage) {
         user.profileImage = {
-          buffer: [],
-          mimetype: "",
+          data: [],
+          contentType: "",
         };
       }
       await user.save();

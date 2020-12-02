@@ -18,7 +18,6 @@ router.post(
   upload.single("profilePic"),
   //signUpValidationMiddlewaresArr,
   async (req, res, next) => {
-    console.log("wubehellosa");
     const { email, password, displayName } = req.body;
     console.log(email,password,displayName);
     let profilePic = {
