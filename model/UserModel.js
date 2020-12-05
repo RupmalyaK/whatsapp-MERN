@@ -13,6 +13,10 @@ const userSchema = new Schema(
       maxLength: 20,
       required: true,
     },
+    friendList:{
+      type: [{ type: Schema.Types.ObjectId, ref: "user" }],
+      default: [],
+    },
     email: {
       type: String,
       maxLength: 32,

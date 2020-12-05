@@ -14,6 +14,7 @@ socket.on("connect", () => {
 });
 
 socket.on("msg-sent", (data) => {
+
   store.dispatch(getNewChatFromSocket(data));
 });
 
@@ -43,4 +44,5 @@ export const justJoinRoom = (roomId) => {
 export const sendMessageSocket = ({ userId, roomId, text }) => {
   console.log("this is the socket id", socket.id);
   socket.emit("send-msg", { userId, roomId, text, socketId: socket.id });
+ 
 };
