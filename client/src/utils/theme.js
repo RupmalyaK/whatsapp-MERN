@@ -16,6 +16,7 @@ export const lightTheme = {
             profileDrawerBackground:"#ededed",
             headerDarkBackground:"#009688",
             notificationBackground:"rgba(0,0,0,0.82)",
+            outGoingBackground:"#dcf8c6",
         },
         icon:{
             hederIconColor:"#919191",

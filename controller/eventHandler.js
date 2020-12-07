@@ -14,24 +14,26 @@ export const createRoomAndJoin = async (socket, data, userSendingMsg) => {
       }
     userSendingMsg[userId] = true;
     userSendingMsg[user2Id] = true;  
-    const { _id: roomId } = await RoomModel.create({
-      users: [userId, user2Id],
-    });
+  
     const user1 = await UserModel.findById(userId);
     const user2 = await UserModel.findById(user2Id);
-    for(let i = 0; i <= user2.friendList.length - 1; i++)
-      {
-        if(userId.toString() === user2.friendList[i].toString())
-          {
-            throw new Error("Already friend"); 
-          }
-      }
+   
     if (!user1) {
       throw new Error(`user with id ${userId} does not exist`);
     }
     if (!user2Id) {
       throw new Error(`user with id ${user2Id} does not exist`);
     }
+    for(let i = 0; i <= user2.friendList.length - 1; i++)
+    {
+      if(userId.toString() === user2.friendList[i].toString())
+        {
+          throw new Error("Already friend"); 
+        }
+    }
+    const { _id: roomId } = await RoomModel.create({
+      users: [userId, user2Id],
+    });
     socket.join(roomId);
     const {socketId:otherUserSocketId} = user2; 
     user1.chatRooms.push(roomId);
@@ -43,6 +45,8 @@ export const createRoomAndJoin = async (socket, data, userSendingMsg) => {
     await user1.save();
     await user2.save();
     io.in(roomId).emit("room-created");
+    //ENTfr-xrDeXJJN5CAAAA
+    console.log(otherUserSocketId);
     io.to(otherUserSocketId).emit("req-join-room");
   } catch (err) {
     console.log(err);

@@ -79,7 +79,7 @@ router.put(
   isAuthenticated,
   upload.single("profileImage"),
   async (req, res, next) => {
-    const { displayName, status, removeProfileImage } = req.body;
+    const { displayName, status,socketId, removeProfileImage } = req.body;
     try {
       const user = await UserModel.findById(mongoose.Types.ObjectId(req.params.userId))
         .populate({
@@ -94,9 +94,7 @@ router.put(
       if (!user) {
         throw new Error("No user exist with this id");
       }
-      console.log("this is displayName", displayName);
       user.displayName = displayName || user.displayName;
-      console.log(req.file);
       user.status = status || user.status;
       if (req.file ? req.file.fieldname === "profileImage" : false) {
         const profileImage = req.file;
@@ -110,6 +108,7 @@ router.put(
           contentType: "",
         };
       }
+      user.socketId = socketId || user.socketId;
       await user.save();
       res.status(200).json(user);
     } catch (err) {
