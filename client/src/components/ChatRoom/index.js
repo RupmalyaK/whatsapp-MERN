@@ -60,8 +60,10 @@ const ChatRoom = (props) => {
       }
 
       const ChatComponents = currentRoom.chats.map(chat => {
-        if(userId === chat.sender._id)
+      //  alert(chat.sender._id);
+        if(userId === chat.sender)
           {
+            
           return  (<span className="chatRoom__body__chats__chat-user">{chat.text}</span>)
           }
         return (<span className="chatRoom__body__chats__chat-other-user">{chat.text}</span>)

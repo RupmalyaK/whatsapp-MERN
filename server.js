@@ -55,6 +55,7 @@ app.use(function (req, res) {
   })
 
 
+const userSendingMsg = {}; 
 /**Socket */           
 
 io.on("connect", (socket) => {
@@ -71,7 +72,8 @@ io.on("connect", (socket) => {
         setSocketId(data,socket.id);
     })
     socket.on("join-room",data => {
-        createRoomAndJoin(socket,data);
+        const {userId, user2Id} = data; 
+        createRoomAndJoin(socket,data, userSendingMsg);
     });
 
    socket.on("req-join-room", data => {
@@ -79,6 +81,7 @@ io.on("connect", (socket) => {
    })
 
     socket.on("send-msg", data => {
+        console.log(data);
         sendMessage(data);
     });
 

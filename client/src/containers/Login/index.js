@@ -19,12 +19,15 @@ const Login = (props) => {
   const handleLogin = e => {
     e.preventDefault();
     const {email, password} = e.target.elements;
+    console.log(e.target.elements);
+    alert("sdads");
     dispatch(signInAsync(email.value,password.value));
   }
 
   const handleSignUp = event => {
     event.preventDefault();
     const { displayName , email, password, profileImageInput} = event.target.elements;
+   
     const formData = new FormData();
     formData.append("displayName", displayName.value);
     formData.append("email", email.value);

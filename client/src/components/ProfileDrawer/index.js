@@ -10,18 +10,16 @@ import {
   Create as PencilIcon,
   Check as CheckIcon,
 } from "@material-ui/icons";
-import {updateUserAsync} from "../../store/actions/userAction";
+import { updateUserAsync } from "../../store/actions/userAction";
 import ImageFromBuffer from "../ImageFromBuffer";
 
 const InputBox = (props) => {
-  const { label, handleSubmit, value, isDisable, ...otherProps } = props;
+  const { label, handleSubmit, value, isDisable,showNoOfCharLeft,maxChar, ...otherProps } = props;
   const theme = useTheme();
   const [currentValue, setCurrentValue] = useState(value);
   const [isActive, setIsActive] = useState(false);
   const { background, icon } = theme.palette;
   const inputRef = useRef(null);
-
-
 
   useEffect(() => {
     isActive && inputRef.current.focus();
@@ -30,6 +28,10 @@ const InputBox = (props) => {
   useEffect(() => {
     isDisable && setIsActive(false);
   }, [isDisable]);
+
+  useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
 
   return (
     <div
@@ -57,16 +59,21 @@ const InputBox = (props) => {
           value={currentValue}
           onChange={(e) => setCurrentValue(e.target.value)}
           ref={inputRef}
+          maxLength={maxChar || 120}
         ></input>
+        
         {isActive ? (
+          
+          <>
+          {showNoOfCharLeft && <span className="inputBox__char-left">{maxChar - currentValue.length}</span>}
           <CheckIcon
             className="inputBox__icon"
             onClick={(e) => {
-          
               handleSubmit(currentValue);
               setIsActive(false);
             }}
           />
+          </>
         ) : (
           <PencilIcon
             className="inputBox__icon"
@@ -78,7 +85,7 @@ const InputBox = (props) => {
   );
 };
 
-const StartConversationDrawer = (props) => {
+const ProfileDrawer = (props) => {
   const { openDrawer, handleCloseDrawer } = props;
   const [profileImageHover, setProfileImageHover] = useState(false);
   const [profileImageClickPos, setProfileImageClickPos] = useState(null);
@@ -93,7 +100,8 @@ const StartConversationDrawer = (props) => {
   const [picFile, setPicFile] = useState(null);
   const dispatch = useDispatch();
   const theme = useTheme();
-
+  const [currentProfileImage, setCurrentProfileImage] = useState(profileImage);
+  const hiddenFileInputRef = useRef(null);
   const menuHeight = 90;
   const menuWidth = 150;
 
@@ -112,16 +120,16 @@ const StartConversationDrawer = (props) => {
   }, [profileImageClickPos]);
 
   useEffect(() => {
-    const checkClickOutsideBox =  (e) => {
+    const checkClickOutsideBox = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setProfileImageClickPos(null);
       }
-    }
-    
-    document.addEventListener("click",checkClickOutsideBox);
+    };
+
+    document.addEventListener("click", checkClickOutsideBox);
 
     const onUnmount = () => {
-      document.removeEventListener("click",checkClickOutsideBox);
+      document.removeEventListener("click", checkClickOutsideBox);
     };
     return onUnmount;
   }, []);
@@ -163,12 +171,42 @@ const StartConversationDrawer = (props) => {
     drawerClosingSequence();
   }, [openDrawer]);
 
+  const handleImageUpload = e => {
+    if(e.target.files[0])
+      {
+        
+        const reader = new FileReader(); 
+        const file = e.target.files[0];
+        const imageObject = {
+          contentType:file.type,
+        };
+        reader.onload = (e) => {
+          const arrayBuffer = e.target.result;
+          imageObject.data = {type:"Buffer", data:arrayBuffer}
+          setCurrentProfileImage(imageObject);
+        }
+        reader.readAsArrayBuffer(file)
+        const formData = new FormData();
+        formData.append("profileImage", e.target.files[0]);   
+        dispatch(updateUserAsync("photo",formData));
+      }
+  
+  }
+
   return (
     <motion.div
       className="profileDrawer"
       animate={drawerControl}
       initial={{ x: -1000 }}
     >
+        <input
+                type="file"
+                name="profileImageInput"
+                accept="image/*"
+                style={{display:"none"}}
+                ref={hiddenFileInputRef}
+                onChange={handleImageUpload}
+              />
       <div
         className="profileDrawer__header"
         style={{
@@ -224,10 +262,10 @@ const StartConversationDrawer = (props) => {
             </div>
           )}
 
-          {profileImage.contentType ? (
+          {currentProfileImage.contentType ? (
             <ImageFromBuffer
-              arrayBuffer={profileImage.data.data}
-              contentType={profileImage.contentType}
+              arrayBuffer={currentProfileImage.data.data}
+              contentType={currentProfileImage.contentType}
               className="profileDrawer__body__profileImage"
               style={{ cursor: "pointer" }}
             />
@@ -247,10 +285,18 @@ const StartConversationDrawer = (props) => {
             }}
             initial={{ opacity: 0, scale: 0 }}
             animate={menuControl}
-
           >
-            <div className="pb-2 pt-3 pl-3" style={{cursor:"pointer"}}>Upload Photo</div>
-            <div className="pb-2 pt-3 pl-3" style={{cursor:"pointer"}}>Remove Photo</div>
+            <div className="pb-2 pt-3 pl-3" style={{ cursor: "pointer" }} onClick = {e => {hiddenFileInputRef.current.click()}}>
+              {" "}
+            
+             Upload Photo 
+            </div>
+            <div className="pb-2 pt-3 pl-3" style={{ cursor: "pointer" }} onClick={e => {
+              dispatch(updateUserAsync("photo",{removeProfileImage:true}));
+              setCurrentProfileImage({contentType:""});
+              }}>
+              Remove Photo
+            </div>
           </motion.div>
         )}
         <motion.div
@@ -262,15 +308,25 @@ const StartConversationDrawer = (props) => {
             label="Your Name"
             value={displayName}
             handleSubmit={(value) => {
-              dispatch(updateUserAsync("display-name", {displayName:value}));
+              if(value === displayName)
+                {
+                  return;
+                }
+              dispatch(updateUserAsync("display-name", { displayName: value }));
             }}
             isDisable={!openDrawer}
+            showNoOfCharLeft 
+            maxChar={25}
           />
           <InputBox
             label="About"
             value={status}
             handleSubmit={(value) => {
-              dispatch(updateUserAsync("status", {status:value}));
+              if(value === status)
+                {
+                  return;
+                }
+              dispatch(updateUserAsync("status", { status: value }));
             }}
             isDisable={!openDrawer}
           />
@@ -280,4 +336,4 @@ const StartConversationDrawer = (props) => {
   );
 };
 
-export default StartConversationDrawer;
+export default ProfileDrawer;

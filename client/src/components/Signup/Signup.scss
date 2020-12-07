@@ -5,7 +5,9 @@ body {
 .__wrapper {
     display: flex;
     justify-content: center;
-
+    #file-input {
+        display: none;
+    }
     .__container {
         width: 75%;
         height: 75vh;
@@ -32,9 +34,7 @@ body {
                     border-radius: 50%;
                 }
 
-                #file-input {
-                    display: none;
-                }
+                
             }
 
             .__form {

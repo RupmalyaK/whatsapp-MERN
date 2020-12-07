@@ -5,29 +5,49 @@ import { io } from "../server.js";
 
 
 
-export const createRoomAndJoin = async (socket, data) => {
+export const createRoomAndJoin = async (socket, data, userSendingMsg) => {
   const { userId, user2Id } = data;
   try {
-    console.log("debuggooo");
-    const { _id: roomId } = await RoomModel.create({
-      users: [userId, user2Id],
-    });
+    if (userSendingMsg[userId] && userSendingMsg[user2Id])
+      {
+        throw new Error("User already joining room");
+      }
+    userSendingMsg[userId] = true;
+    userSendingMsg[user2Id] = true;  
+  
     const user1 = await UserModel.findById(userId);
     const user2 = await UserModel.findById(user2Id);
+   
     if (!user1) {
       throw new Error(`user with id ${userId} does not exist`);
     }
     if (!user2Id) {
       throw new Error(`user with id ${user2Id} does not exist`);
     }
+    for(let i = 0; i <= user2.friendList.length - 1; i++)
+    {
+      if(userId.toString() === user2.friendList[i].toString())
+        {
+          throw new Error("Already friend"); 
+        }
+    }
+    const { _id: roomId } = await RoomModel.create({
+      users: [userId, user2Id],
+    });
     socket.join(roomId);
     const {socketId:otherUserSocketId} = user2; 
     user1.chatRooms.push(roomId);
+    user1.friendList.push(user2._id);
     user2.chatRooms.push(roomId);
-    io.in(roomId).emit("room-created");
-    io.to(otherUserSocketId).emit("req-join-room",roomId);
+    user2.friendList.push(user1._id);
+    delete userSendingMsg.userId;
+    delete userSendingMsg.user2Id;
     await user1.save();
     await user2.save();
+    io.in(roomId).emit("room-created");
+    //ENTfr-xrDeXJJN5CAAAA
+    console.log(otherUserSocketId);
+    io.to(otherUserSocketId).emit("req-join-room");
   } catch (err) {
     console.log(err);
     throw err;
@@ -36,7 +56,7 @@ export const createRoomAndJoin = async (socket, data) => {
 
 export const sendMessage = async (data) => {
   const { userId, roomId, text,socketId,roomIndex } = data;
-  console.log(data);
+ 
   try {
     const room = await RoomModel.findById(roomId);
     const newChat = {
@@ -66,6 +86,6 @@ export const setSocketId = async (data,socketId) => {
 }
 
 export const justJoinRoom = (socket,data) => {
-  console.log(data.roomId);
+
   socket.join(data.roomId);
 }

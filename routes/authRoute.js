@@ -18,13 +18,13 @@ router.post(
   upload.single("profilePic"),
   //signUpValidationMiddlewaresArr,
   async (req, res, next) => {
-    console.log("wubehellosa");
     const { email, password, displayName } = req.body;
     console.log(email,password,displayName);
     let profilePic = {
       buffer:[],
       mimetype:'',
     };
+   
     if (req.file ? req.file.fieldname === "profilePic" : false) {
       profilePic = req.file;
     }
@@ -33,6 +33,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    console.log("Adsda");
     try {
       const user = await UserModel.findOne({ email });
       if (user) {

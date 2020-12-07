@@ -4,6 +4,13 @@ import * as usersApi from "../../api/usersApi.js";
 import cookies from "js-cookie";
 import swal from "sweetalert2";
 
+const arrayToMap = (arr) => {
+  const obj = {};
+  arr.forEach(ele => {
+    obj[ele] = true;
+  });
+  return obj;
+}
 const createAction = (type, payLoad) => {
   return { type, payLoad };
 };
@@ -13,6 +20,7 @@ export const signUpAsync = (formData) => {
     try {
       const user = await authApi.signup(formData);
       cookies.set("accesToken", user.accessToken, { expires: 365, path: "/" });
+      user.friendList = arrayToMap(user.friendList);
       dispatch(createAction(actionTypes.SET_USER_DETAIL, user));
     } catch (err) {
       console.log(err);
@@ -53,6 +61,7 @@ export const getUserDetail = () => {
     const userId = getState().user.id;
     try {
       const user = await usersApi.getUserDetail(userId);
+      user.friendList = arrayToMap(user.friendList);
       dispatch(createAction(actionTypes.SET_USER_DETAIL, user));
     } catch (err) {
       console.log(err);
@@ -123,7 +132,7 @@ export const undoUserUpdateAsync = (propsToUndo) => {
           dispatch(updateUserAsync("display-name",{displayName:prevDisplayName}));
           break;
         case "status":
-          dispatch(updateUserAsync("status",{displayName:prevDisplayName}));
+          dispatch(updateUserAsync("status",{status:prevStatus}));
           break;
       }
   }

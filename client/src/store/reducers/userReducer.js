@@ -11,6 +11,7 @@ const INITIAL_STATE = {
   searchedUsers: [],
   id: "",
   prevStatus:"",
+  friendList:null,
   status: "",
   updatingDisplayName: false,
   updatingStatus: false,
@@ -33,6 +34,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         _id: id,
         prevStatus,
         prevDisplayName,
+        friendList,
       } = payLoad;
       return {
         ...state,
@@ -46,6 +48,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         status,
         prevStatus,
         prevDisplayName,
+        friendList,
       };
     }
     case actionTypes.GET_USERS_BY_NAME:

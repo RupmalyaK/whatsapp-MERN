@@ -8,6 +8,8 @@ import Loader from '../../components/Loader';
 import {getUserDetail} from "../../store/actions/userAction.js";
 import {setCurrentRoom} from "../../store/actions/roomAction.js";
 import {justJoinRoom} from "../../utils/socketUtils.js";
+import socket from "../../utils/socketUtils.js";
+import {updateUserById} from "../../api/usersApi.js";
 
 
 import "./app.scss";
@@ -16,7 +18,7 @@ import "./app.scss";
 
 const Layout = (props) => {
   const dispatch = useDispatch();
-  const chatRooms = useSelector(state => state.user.chatRooms);
+  const {chatRooms, id:userId }= useSelector(state => state.user);
 
   const joinAllSubscribedRooms = () => {
     if(!chatRooms || chatRooms.length === 0)
@@ -33,6 +35,7 @@ const Layout = (props) => {
     dispatch(getUserDetail());
     dispatch(setCurrentRoom(-1));
     joinAllSubscribedRooms();
+    updateUserById(userId, {socketId:socket.id});
   },[]);
 
   const menu = routes.map((route, index) => {

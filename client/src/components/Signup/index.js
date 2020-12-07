@@ -49,11 +49,18 @@ const SignUp = ({ onSubmit,onChangePage }) => {
           <div className="__user_image">
             <label for="file-input">
               <img type="file" src={profileImage || profileIcon} alt="" />
-              <input
+            </label>
+          </div>
+          <h3>Create Account</h3>
+          <p>Create a new account</p>
+          <div className="__form">
+            <form onSubmit={onSubmit} style={{ padding: "0px" }}>
+            <input
                 id="file-input"
                 type="file"
                 placeholder="Profile icon"
                 name="profileImageInput"
+                className="file-input"
                 accept="image/*"
                 onChange={(e) =>
                   e.target.files[0]
@@ -61,13 +68,6 @@ const SignUp = ({ onSubmit,onChangePage }) => {
                     : setProfileImage(null)
                 }
               />
-
-            </label>
-          </div>
-          <h3>Create Account</h3>
-          <p>Create a new account</p>
-          <div className="__form">
-            <form onSubmit={onSubmit} style={{ padding: "0px" }}>
               <input type="text"  name="displayName" placeholder="Display Name" />
 
               <input type="email" name="email" placeholder="Email" />
