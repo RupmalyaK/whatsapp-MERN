@@ -20,7 +20,7 @@ const Signin = ({ onSubmit, onChangePage }) => {
 
     // </form>
 
-    <div className="__wrapper">
+    <div className="__SignIn">
       <div className="__container">
         <div className="__left_side">
           <div className="__user_image"></div>

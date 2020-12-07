@@ -151,7 +151,7 @@ const SideBar = (props) => {
         >
           {showRoomsWithChat()}
         </div>
-        <Button
+        <button
           className="sideBar__add__button"
           onClick={(e) => setIsAddUserModalOpen(true)}
           style={{
@@ -160,7 +160,7 @@ const SideBar = (props) => {
           }}
         >
           Add user
-        </Button>
+        </button>
       </div>
     </>
   );
