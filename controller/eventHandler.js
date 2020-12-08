@@ -45,8 +45,6 @@ export const createRoomAndJoin = async (socket, data, userSendingMsg) => {
     await user1.save();
     await user2.save();
     io.in(roomId).emit("room-created");
-    //ENTfr-xrDeXJJN5CAAAA
-    console.log(otherUserSocketId);
     io.to(otherUserSocketId).emit("req-join-room", roomId);
   } catch (err) {
     console.log(err);

@@ -7,6 +7,7 @@ import RightPanel from '../../components/Rightpannel';
 import LeftPanel from '../../components/Leftpannel';
 import {useDispatch, useSelector} from "react-redux";
 import {signUpAsync,signInAsync} from "../../store/actions/userAction";
+import socket from "../../utils/socketUtils.js";
 
 
 const Login = (props) => {
@@ -19,9 +20,7 @@ const Login = (props) => {
   const handleLogin = e => {
     e.preventDefault();
     const {email, password} = e.target.elements;
-    console.log(e.target.elements);
-    alert("sdads");
-    dispatch(signInAsync(email.value,password.value));
+    dispatch(signInAsync(email.value,password.value,socket.id));
   }
 
   const handleSignUp = event => {
@@ -33,6 +32,7 @@ const Login = (props) => {
     formData.append("email", email.value);
     formData.append("password", password.value);
     formData.append("profilePic", profileImageInput.files[0]);
+    formData.append("socketId",socket.id)
     dispatch(signUpAsync(formData));
   }
   // const onClick = () => setToggle(!toggle);

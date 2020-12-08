@@ -28,12 +28,12 @@ export const signUpAsync = (formData) => {
   };
 };
 
-export const signInAsync = (email, password) => {
+export const signInAsync = (email, password, socketId) => {
   //alert("hello");
   return async (dispatch) => {
     alert(email);
     try {
-      const user = await authApi.login({ email, password });
+      const user = await authApi.login({ email, password, socketId });
       cookies.set("accesToken", user.accessToken, { expires: 365, path: "/" });
       dispatch(createAction(actionTypes.SET_USER_DETAIL, user));
     } catch (err) {

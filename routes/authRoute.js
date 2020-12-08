@@ -18,7 +18,7 @@ router.post(
   upload.single("profilePic"),
   //signUpValidationMiddlewaresArr,
   async (req, res, next) => {
-    const { email, password, displayName } = req.body;
+    const { email, password, displayName,socketId } = req.body;
     console.log(email,password,displayName);
     let profilePic = {
       buffer:[],
@@ -33,7 +33,6 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    console.log("Adsda");
     try {
       const user = await UserModel.findOne({ email });
       if (user) {
@@ -48,6 +47,7 @@ router.post(
           data:profilePic.buffer,
           contentType:profilePic.mimetype,
         },
+        socketId,
         status:"Hey there! I am using WhatsApp."
       });
       const accessToken = jwt.sign(
@@ -71,7 +71,7 @@ router.post(
 );
 
 router.post("/signin", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, socketId } = req.body;
   try {
     const user = await UserModel.findOne({ email }).populate({
       path: "chatRooms",
@@ -98,6 +98,8 @@ router.post("/signin", async (req, res) => {
     );
     doc.accessToken = accessToken;
     delete doc.password;
+    user.socketId = socketId;
+    await user.save();
     res.status(200).json(doc);
   } catch (error) {
     res.status(500);
