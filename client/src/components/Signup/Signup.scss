@@ -1,13 +1,15 @@
 body {
     background-color: #25d36617;
+
+    #file-input {
+        display: none;
+    }
 }
 
 .__SignIn {
     display: flex;
     justify-content: center;
-    #file-input {
-        display: none;
-    }
+ 
     .__container {
         width: 75%;
         height: 75vh;

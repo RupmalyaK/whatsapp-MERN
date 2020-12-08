@@ -47,7 +47,7 @@ export const createRoomAndJoin = async (socket, data, userSendingMsg) => {
     io.in(roomId).emit("room-created");
     //ENTfr-xrDeXJJN5CAAAA
     console.log(otherUserSocketId);
-    io.to(otherUserSocketId).emit("req-join-room");
+    io.to(otherUserSocketId).emit("req-join-room", roomId);
   } catch (err) {
     console.log(err);
     throw err;
@@ -55,7 +55,7 @@ export const createRoomAndJoin = async (socket, data, userSendingMsg) => {
 };
 
 export const sendMessage = async (data) => {
-  const { userId, roomId, text,socketId,roomIndex } = data;
+  const { userId, roomId, text,roomIndex } = data;
  
   try {
     const room = await RoomModel.findById(roomId);
@@ -86,6 +86,6 @@ export const setSocketId = async (data,socketId) => {
 }
 
 export const justJoinRoom = (socket,data) => {
-
+  console.log("debug this out", data.roomId);
   socket.join(data.roomId);
 }
