@@ -81,8 +81,7 @@ io.on("connect", (socket) => {
    })
 
     socket.on("send-msg", data => {
-        console.log(data);
-        sendMessage(data);
+        sendMessage(data,socket);
     });
 
     socket.on("just-join-room", data => {

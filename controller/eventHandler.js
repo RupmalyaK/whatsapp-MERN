@@ -52,7 +52,7 @@ export const createRoomAndJoin = async (socket, data, userSendingMsg) => {
   }
 };
 
-export const sendMessage = async (data) => {
+export const sendMessage = async (data,socket) => {
   const { userId, roomId, text,roomIndex } = data;
  
   try {
@@ -64,7 +64,7 @@ export const sendMessage = async (data) => {
     }
     room.chats.push(newChat);
     await room.save();
-    io.in(roomId).emit("msg-sent", {...newChat,roomId,roomIndex});
+    socket.to(roomId).emit("msg-sent", {...newChat,roomId,roomIndex});
   } catch (err) {
     console.log(err);
     throw err;

@@ -137,3 +137,7 @@ export const undoUserUpdateAsync = (propsToUndo) => {
       }
   }
 }
+
+export const addChatToRoom = (roomId,text) => {
+  return createAction(actionTypes.ADD_CHAT_TO_ROOM, {roomId,text});
+}

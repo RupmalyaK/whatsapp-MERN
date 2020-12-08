@@ -87,6 +87,17 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case actionTypes.UNSET_UPDATING_STATUS:
       return { ...state, updatingStatus: false };
 
+    case actionTypes.ADD_CHAT_TO_ROOM:{
+      const {text,roomId} = payLoad;
+      const chatRooms = [...state.chatRooms];
+      const index = chatRooms.findIndex(room => room._id === roomId);
+      chatRooms[index].chats.push({
+        sender:state.id,
+        text,
+        time:Date.now(),
+      });
+      return {...state,chatRooms};
+    }
     default:
       return state;
   }

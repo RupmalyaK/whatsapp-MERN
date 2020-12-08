@@ -14,6 +14,7 @@ import {
   sendMessageSocket,
   createRoomAndJoinSocket,
 } from "../../utils/socketUtils";
+import {addChatToRoom} from "../../store/actions/userAction";
 import { set } from "mongoose";
 
 const status = "online";
@@ -50,6 +51,7 @@ const ChatRoom = (props) => {
       sendMessageSocket({userId, roomId:currentRoom._id,text:textInput});
       return;
     }*/
+   dispatch(addChatToRoom(currentRoomId,textInput));
    sendMessageSocket({userId, roomId:currentRoom._id,text:textInput});
   };
 
