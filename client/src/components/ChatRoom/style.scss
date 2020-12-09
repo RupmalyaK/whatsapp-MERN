@@ -94,13 +94,53 @@
     height:100%;
     display:flex;
     flex-direction: column;
-    padding:20px;
+    padding:30px;
+    margin-bottom:5px;
+
+}
+
+
+.chatRoom__body__chats__chat{
+    
+    padding:5px;
+    margin-bottom:5px;
+    border-radius: 5%;
+    display:inline-flex;
+    min-width:200px;
+    max-width:50%;
+   
 }
 
 .chatRoom__body__chats__chat-user{
     align-self:flex-end;
-    padding:20px;
 }
+
+.chatRoom__body__chats__chat-other-user{
+    align-self:flex-start;
+}
+
+.chatRoom__body__chats__chat__text{
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    min-width:150px;
+
+}
+.chatRoom__body__chats__chat-user__time{
+    margin-left:10px;
+    font-size:0.7rem;
+    align-self:flex-end;
+}
+
+.chatRoom__body__chats__chat-other-user__time{
+    margin-left:10px;
+    font-size:0.7rem;
+    align-self:flex-end;
+}
+
+
+
+
+
 
 
 

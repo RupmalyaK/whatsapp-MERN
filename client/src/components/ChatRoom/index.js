@@ -14,8 +14,8 @@ import {
   sendMessageSocket,
   createRoomAndJoinSocket,
 } from "../../utils/socketUtils";
-import {addChatToRoom} from "../../store/actions/userAction";
-import { set } from "mongoose";
+import { addChatToRoom } from "../../store/actions/userAction";
+import getDay from "../../utils/day";
 
 const status = "online";
 
@@ -24,17 +24,13 @@ const ChatRoom = (props) => {
   const { background: backgroundColor, text: textColor } = theme.palette;
   const headerIconColor = theme.palette.icon.hederIconColor;
   const [textInput, setTextInput] = useState("");
-  const currentRoomId = useSelector(
-    (state) => state.room.currentChatRoomId
-  );
-  const currentRoom = useSelector(
-    (state) => state.user.chatRooms.find(room => room._id === currentRoomId)
+  const currentRoomId = useSelector((state) => state.room.currentChatRoomId);
+  const currentRoom = useSelector((state) =>
+    state.user.chatRooms.find((room) => room._id === currentRoomId)
   );
   const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
-  useEffect(() => {
-    
-}, [])
+  useEffect(() => {}, []);
   if (!currentRoom) {
     return <></>;
   }
@@ -45,34 +41,44 @@ const ChatRoom = (props) => {
   const { displayName, profileImage } = otherUserInfo;
 
   const sendMessage = () => {
-   /* if (currentRoom.chats.length === 0) {
-      console.log("this is current chatroom", currentRoom.chats);
-      createRoomAndJoinSocket(userId, otherUserInfo._id);
-      sendMessageSocket({userId, roomId:currentRoom._id,text:textInput});
-      return;
-    }*/
-   dispatch(addChatToRoom(currentRoomId,textInput));
-   sendMessageSocket({userId, roomId:currentRoom._id,text:textInput});
+    dispatch(addChatToRoom(currentRoomId, textInput));
+    sendMessageSocket({ userId, roomId: currentRoom._id, text: textInput });
   };
 
-  const showChats=() => {
-    if(currentRoom.chats.length == 0)
-      {
-        return <></>;
+  const showChats = () => {
+    if (currentRoom.chats.length == 0) {
+      return <></>;
+    }
+
+    const ChatComponents = currentRoom.chats.map((chat) => {
+      const date = new Date(chat.time);
+      const day = getDay(new Date().getHours() - date.getHours());
+      console.log(day);
+      if (userId === chat.sender) {
+        return (
+          <div
+            className="chatRoom__body__chats__chat chatRoom__body__chats__chat-user"
+            style={{ background: backgroundColor.outGoingBackground }}
+            key={chat._id}
+          >
+            <span className="chatRoom__body__chats__chat__text chatRoom__body__chats__chat-user__text">{chat.text}</span>
+            <span className="chatRoom__body__chats__chat-user__time">{date.getHours() + '.' + date.getMinutes()}</span>
+          </div>
+        );
       }
+      return (
+        <div
+          className="chatRoom__body__chats__chat chatRoom__body__chats__chat-other-user"
+          style={{ background: backgroundColor.incommingBackground }}
+        >
+           <span className="chatRoom__body__chats__chat__text chatRoom__body__chats__chat-other-user__text">{chat.text}</span>
+           <span className="chatRoom__body__chats__chat-other-user__time">{date.getHours() + '.' + date.getMinutes()}</span>
+        </div>
+      );
+    });
 
-      const ChatComponents = currentRoom.chats.map(chat => {
-      //  alert(chat.sender._id);
-        if(userId === chat.sender)
-          {
-            
-          return  (<span className="chatRoom__body__chats__chat-user">{chat.text}</span>)
-          }
-        return (<span className="chatRoom__body__chats__chat-other-user">{chat.text}</span>)
-      })
-
-      return ChatComponents;
-  }
+    return ChatComponents;
+  };
 
   return (
     <div className="chatRoom">
@@ -105,9 +111,7 @@ const ChatRoom = (props) => {
         className="chatRoom__body"
         style={{ backgroundImage: `url(./images/chat-background-1.jpg)` }}
       >
-        <div className="chatRoom__body__chats">
-            {showChats()}
-        </div>
+        <div className="chatRoom__body__chats">{showChats()}</div>
       </div>
       <div
         className="chatRoom__footer"
@@ -118,24 +122,21 @@ const ChatRoom = (props) => {
         <input
           className="chatRoom__footer__input"
           style={{ background: backgroundColor.searchInputBackground }}
-          
           value={textInput}
           placeholder="search or start a new chat"
-          onKeyPress={e => {
+          onKeyPress={(e) => {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
-           
-            if(e.repeat)
-              {
-                return;
-              }
-              console.log(e.key);
-         
-           if(e.key === "Enter")
-              {
-                sendMessage();
-                setTextInput('');
-              }
+
+            if (e.repeat) {
+              return;
+            }
+            console.log(e.key);
+
+            if (e.key === "Enter") {
+              sendMessage();
+              setTextInput("");
+            }
           }}
           onChange={(e) => setTextInput(e.target.value)}
         ></input>

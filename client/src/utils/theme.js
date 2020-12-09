@@ -17,6 +17,7 @@ export const lightTheme = {
             headerDarkBackground:"#009688",
             notificationBackground:"rgba(0,0,0,0.82)",
             outGoingBackground:"#dcf8c6",
+            incommingBackground:"#fff",
         },
         icon:{
             hederIconColor:"#919191",
