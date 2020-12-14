@@ -18,6 +18,7 @@ export const lightTheme = {
             notificationBackground:"rgba(0,0,0,0.82)",
             outGoingBackground:"#dcf8c6",
             incommingBackground:"#fff",
+            systemMessageBackground:"rgba(225,245,254,0.92)",
         },
         icon:{
             hederIconColor:"#919191",

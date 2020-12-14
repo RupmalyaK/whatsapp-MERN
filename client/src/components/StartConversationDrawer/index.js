@@ -13,7 +13,7 @@ import { ListGroup } from "react-bootstrap";
 
 const StartConversationDrawer = (props) => {
   const { openDrawer, handleCloseDrawer } = props;
-  const { chatRooms, id } = useSelector((state) => state.user);
+  const { chatRooms, id,status } = useSelector((state) => state.user);
   const drawerControl = useAnimation();
   const [activeIndex,setActiveIndex] = useState(-1);
   const [hoverIndex,setHoverIndex ] = useState(-1);  
@@ -62,7 +62,7 @@ const StartConversationDrawer = (props) => {
               />
               <div className="startConversationDrawer__body__user-info__name-and-status" >
                   <h5>{otherUserInfo.displayName}</h5>
-                  <p>{"Hey!, I am new to whatsapp"}</p>
+                  <p>{status}</p>
               </div>
             </div>
           </ListGroup.Item>

@@ -96,9 +96,14 @@
     flex-direction: column;
     padding:30px;
     margin-bottom:5px;
+    overflow:auto;
 
 }
-
+.chatRoom__body__chats__day{
+align-self:center;
+padding:7px;
+border-radius:10%;
+}
 
 .chatRoom__body__chats__chat{
     
@@ -136,6 +141,7 @@
     font-size:0.7rem;
     align-self:flex-end;
 }
+
 
 
 

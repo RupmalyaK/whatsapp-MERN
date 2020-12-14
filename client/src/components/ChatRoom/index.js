@@ -49,31 +49,68 @@ const ChatRoom = (props) => {
     if (currentRoom.chats.length == 0) {
       return <></>;
     }
-
+    const showDay = (currentDay, prevDay) => {
+      if (currentDay === prevDay) {
+       
+        return null;
+      }
+      return (
+        <div
+          className="chatRoom__body__chats__day"
+          style={{ background: backgroundColor.systemMessageBackground }}
+        >
+          {currentDay}
+        </div>
+      );
+    };
+    
+    let previousDay = "";
     const ChatComponents = currentRoom.chats.map((chat) => {
       const date = new Date(chat.time);
-      const day = getDay(new Date().getHours() - date.getHours());
-      console.log(day);
+      const diffTime = Math.abs(new Date() - date);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const currentDay = getDay(diffDays,date);
+      const day = showDay(currentDay, previousDay);
+
+      if(day)
+        {
+        
+          previousDay = currentDay; 
+        }
       if (userId === chat.sender) {
         return (
-          <div
-            className="chatRoom__body__chats__chat chatRoom__body__chats__chat-user"
-            style={{ background: backgroundColor.outGoingBackground }}
-            key={chat._id}
-          >
-            <span className="chatRoom__body__chats__chat__text chatRoom__body__chats__chat-user__text">{chat.text}</span>
-            <span className="chatRoom__body__chats__chat-user__time">{date.getHours() + '.' + date.getMinutes()}</span>
-          </div>
+          <>
+            {day}
+            <div
+              className="chatRoom__body__chats__chat chatRoom__body__chats__chat-user"
+              style={{ background: backgroundColor.outGoingBackground }}
+              key={chat._id}
+            >
+              <span className="chatRoom__body__chats__chat__text chatRoom__body__chats__chat-user__text">
+                {chat.text}
+              </span>
+              <span className="chatRoom__body__chats__chat-user__time">
+                {date.getHours() + "." + date.getMinutes()}
+              </span>
+            </div>
+          </>
         );
       }
       return (
+        <>
+        {day}
         <div
           className="chatRoom__body__chats__chat chatRoom__body__chats__chat-other-user"
           style={{ background: backgroundColor.incommingBackground }}
         >
-           <span className="chatRoom__body__chats__chat__text chatRoom__body__chats__chat-other-user__text">{chat.text}</span>
-           <span className="chatRoom__body__chats__chat-other-user__time">{date.getHours() + '.' + date.getMinutes()}</span>
+          <span className="chatRoom__body__chats__chat__text chatRoom__body__chats__chat-other-user__text">
+            {chat.text}
+          </span>
+          <span className="chatRoom__body__chats__chat-other-user__time">
+            {date.getHours() + "." + date.getMinutes()}
+          </span>
         </div>
+        </>
       );
     });
 
@@ -131,7 +168,7 @@ const ChatRoom = (props) => {
             if (e.repeat) {
               return;
             }
-            console.log(e.key);
+      
 
             if (e.key === "Enter") {
               sendMessage();
