@@ -58,7 +58,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
       const { roomIndex, roomId, ...newChat } = payLoad;
       let chatRooms = [...state.chatRooms];
       let newChatInRoom;
-
       chatRooms = chatRooms.filter((room) => {
         if (room._id === roomId) {
           newChatInRoom = room;
@@ -66,7 +65,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
         }
         return true;
       });
-      console.log("this is chatRooms before shift", chatRooms);
       newChatInRoom.chats.push(newChat);
       chatRooms.unshift(newChatInRoom);
       return { ...state, chatRooms };

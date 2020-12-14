@@ -99,3 +99,14 @@ position:relative;
     font-size:1.5rem;
     border:none;
 }
+
+.sideBar__header__right__container{
+    position:relative;
+}
+.sideBar__header__right__container__num{
+    position:absolute;
+    font-size:0.7rem;
+    bottom:-10px;
+    left:20px;
+    font-weight: 700;
+}

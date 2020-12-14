@@ -10,7 +10,6 @@ const getDayString = {
 
 export default  (dayGap,date) => {
   const currentDay = new Date().getDay();
-  console.log("check diz out", dayGap);
   switch (true) {
     case dayGap === 1:
       return "Today";

@@ -52,12 +52,16 @@ const AddUser = (props) => {
         </p>
         <ListGroup>
             {searchedUsers.map(user => {
-              const userId = user._id;
+              const otherUserId = user._id;
+              if(userId === otherUserId)
+                {
+                  return (<></>);
+                }
               return (
                 <div className="addUser__users-list"> 
                     <ImageFromBuffer arrayBuffer={user.profileImage.data.data} contentType={user.profileImage.contentType} className="addUser__users-list__img"/>
                     <h5 className="addUser__users-list__name" >{user.displayName}</h5>
-                    <Button className="addUser__users-list__button" variant={friendList[userId] ? "secondary" : "success"} disabled={friendList[userId]}  onClick={e => handleAddUserToRoom(e,user._id)}>{friendList[userId] ? "added" : "add"}</Button>
+                    <Button className="addUser__users-list__button" variant={friendList[otherUserId] ? "secondary" : "success"} disabled={friendList[otherUserId]}  onClick={e => handleAddUserToRoom(e,user._id)}>{friendList[otherUserId] ? "added" : "add"}</Button>
                 </div>
               );
             })}
