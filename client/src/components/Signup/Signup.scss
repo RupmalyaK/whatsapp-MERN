@@ -67,7 +67,6 @@ body {
                     font-size: 1rem;
                     padding: 4px 35px;
                     font-weight: 600;
-
                     &:focus {
                         outline: none;
                     }
@@ -158,4 +157,17 @@ input[type=file] {
         opacity: 1;
         letter-spacing: 1px;
     }
+}
+
+.__user__image__profile-icon-container{
+    display:flex;
+    justify-content:center;
+    flex-direction: column;
+    align-items:center;
+    cursor:pointer;
+}
+
+.__user__image__profile-icon-container__camera-icon{
+    position:relative;
+    bottom:20px;
 }

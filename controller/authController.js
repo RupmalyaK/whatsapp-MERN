@@ -39,17 +39,17 @@ const getAuthToken = (req, res, next) => {
    }
 
    export const signUpValidationMiddlewaresArr = [
-    check("email").isEmail().withMessage("Must be a valid email address"),
+    check("email").isEmail().withMessage("Email Must be a valid email address"),
     
     check("password")
-    .isLength({ min: 5}).withMessage("Password must be at least 5 character long")
-    .isLength({ max: 32}).withMessage("Password must be less than 32 characters long")
-    .matches(/\d/).withMessage('password must contain at least a single digit')
-    .matches(/[\W_]/).withMessage("password must contain at least a single special character"),
+    .isLength({ min: 5}).withMessage("Password Must be at least 5 character long")
+    .isLength({ max: 32}).withMessage("Password Must be less than 32 characters long")
+    .matches(/\d/).withMessage('Password Must contain at least a single digit')
+    .matches(/[\W_]/).withMessage("Password Must contain at least a single special character"),
 
     check("displayName")
-    .isLength({ min: 6}).withMessage("Display name must be at least 5 character long")
-    .isLength({ max: 32}).withMessage("Display name must be less than 32 characters long")
+    .isLength({ min: 6}).withMessage("Display-name Must be at least 5 character long")
+    .isLength({ max: 32}).withMessage("Display-name Must be less than 32 characters long")
  ]
 
    export const limitRequestFromTheUser = (req,res,next) => {

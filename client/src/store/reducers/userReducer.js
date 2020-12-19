@@ -16,6 +16,8 @@ const INITIAL_STATE = {
   updatingDisplayName: false,
   updatingStatus: false,
   updatingPhoto: false,
+  signUpErrors:null,
+  signInErrors:null,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -49,6 +51,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         prevStatus,
         prevDisplayName,
         friendList,
+        signUpErrors:null,
       };
     }
     case actionTypes.GET_USERS_BY_NAME:
@@ -96,6 +99,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
       });
       return {...state,chatRooms};
     }
+    case actionTypes.SET_SIGN_UP_ERRORS:
+      return {...state,signUpErrors:payLoad}
+    case actionTypes.CLEAR_SIGN_UP_ERRORS:
+      return {...state, signUpErrors:null}
+    case actionTypes.SET_SIGN_IN_ERRORS:
+      return {...state,signInErrors:payLoad};
+    case actionTypes.CLEAR_SIGN_IN_ERRORS:
+      return {...state,signInErrors:null}
     default:
       return state;
   }

@@ -16,10 +16,9 @@ const router = Router();
 router.post(
   "/signup",
   upload.single("profilePic"),
-  //signUpValidationMiddlewaresArr,
+  signUpValidationMiddlewaresArr,
   async (req, res, next) => {
     const { email, password, displayName,socketId } = req.body;
-    console.log(email,password,displayName);
     let profilePic = {
       buffer:[],
       mimetype:'',
@@ -70,8 +69,9 @@ router.post(
   }
 );
 
-router.post("/signin", async (req, res) => {
+router.post("/signin", async (req, res, next) => {
   const { email, password, socketId } = req.body;
+
   try {
     const user = await UserModel.findOne({ email }).populate({
       path: "chatRooms",
@@ -84,7 +84,9 @@ router.post("/signin", async (req, res) => {
     if (!user) {
       throw "User with that email does not exist";
     }
+    
     const isPasswordRight = await bcrypt.compare(password, user.password);
+  
     if (!isPasswordRight) {
       throw "Wrong password";
     }
@@ -96,8 +98,8 @@ router.post("/signin", async (req, res) => {
         expiresIn: "365d",
       }
     );
+
     doc.accessToken = accessToken;
-    delete doc.password;
     user.socketId = socketId;
     await user.save();
     res.status(200).json(doc);

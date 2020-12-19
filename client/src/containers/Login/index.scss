@@ -137,6 +137,10 @@ form {
   border-color: #4481eb;
 }
 
+.error{
+  display:block;
+  color:red;
+}
 // .btn {
 //   // width: 150px;
 //   background-color: #5995fd;
@@ -162,6 +166,12 @@ form {
   display:flex;
   align-items:center;
 
+}
+
+.__right_content__whatsapp-icon{
+height:200px;
+width:200px;
+margin-bottom:100px;
 }
 
 .profileImage{

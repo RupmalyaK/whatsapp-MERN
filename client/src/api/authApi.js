@@ -19,7 +19,7 @@ export const PostRequest = (url, data) => {
                 resolve(resp);
             },
             onError: (err) => {
-                reject();
+                reject(err);
                 console.log('api error', err);
             }
         }

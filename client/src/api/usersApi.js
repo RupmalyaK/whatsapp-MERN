@@ -22,7 +22,7 @@ const GetRequest = (url) => {
         resolve(resp);
       },
       onError: (err) => {
-        reject();
+        reject(err);
         console.log("api error", err);
       },
     };
@@ -39,7 +39,7 @@ const PutRequest = (url, data) => {
         resolve(resp);
       },
       onError: (err) => {
-        reject();
+        reject(err);
         console.log("api error", err);
       },
     };
@@ -58,7 +58,7 @@ function PostRequest(url ,data){
               resolve(resp);
           },
           onError:(err) =>{
-              reject();
+              reject(err);
               console.log('api error' , err);
           }
       }
@@ -77,7 +77,7 @@ function DeleteRequest(url) {
               resolve(resp);
           },
           onError: (err) => {
-              reject();
+              reject(err);
               console.log('api error', err);
           }
       }
@@ -95,7 +95,7 @@ const GetWithCancel = (url) => {
         resolve(resp);
       },
       onError: (err) => {
-        reject();
+        reject(err);
         console.log("api error", err);
       },
     };

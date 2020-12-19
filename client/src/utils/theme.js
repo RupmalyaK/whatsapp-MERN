@@ -23,6 +23,7 @@ export const lightTheme = {
         icon:{
             hederIconColor:"#919191",
             addedUserIconNumber:"#1b9a59",
+            cameraIconColor:"#25d366",
         },
         text:{
             primaryStrong:"#000",

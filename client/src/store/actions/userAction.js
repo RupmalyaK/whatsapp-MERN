@@ -2,7 +2,7 @@ import * as actionTypes from "./actionTypes.js";
 import * as authApi from "../../api/authApi.js";
 import * as usersApi from "../../api/usersApi.js";
 import cookies from "js-cookie";
-import swal from "sweetalert2";
+
 
 const arrayToMap = (arr) => {
   const obj = {};
@@ -23,21 +23,49 @@ export const signUpAsync = (formData) => {
       user.friendList = arrayToMap(user.friendList);
       dispatch(createAction(actionTypes.SET_USER_DETAIL, user));
     } catch (err) {
-      console.log(err);
+      const errors = err.response.data.errors;
+      const emailErrors = [];
+      const displayNameErrors = []; 
+      const passwordErrors = []; 
+      errors.forEach(error => {
+        const errorMsg = error.msg.split(' ');
+        const firstElement = errorMsg.shift();
+      switch (firstElement)
+        {
+          case "Display-name":
+            displayNameErrors.push(errorMsg.join(' '));
+            break;
+          case "Password":
+            passwordErrors.push(errorMsg.join(' '));
+            break;
+          case "Email":
+            emailErrors.push(errorMsg.join(' '));
+            break;  
+        }
+      });
+    
+      dispatch(createAction(actionTypes.SET_SIGN_UP_ERRORS, {
+       emailErrors,
+       displayNameErrors,
+       passwordErrors,
+      }))
     }
   };
 };
 
 export const signInAsync = (email, password, socketId) => {
-  //alert("hello");
+
   return async (dispatch) => {
-    alert(email);
+  
     try {
+    
       const user = await authApi.login({ email, password, socketId });
       cookies.set("accesToken", user.accessToken, { expires: 365, path: "/" });
+     
       dispatch(createAction(actionTypes.SET_USER_DETAIL, user));
     } catch (err) {
       console.log(err);
+      dispatch(createAction(actionTypes.SET_SIGN_IN_ERRORS,"Email or password incorrect"));
     }
   };
 };
@@ -140,4 +168,12 @@ export const undoUserUpdateAsync = (propsToUndo) => {
 
 export const addChatToRoom = (roomId,text) => {
   return createAction(actionTypes.ADD_CHAT_TO_ROOM, {roomId,text});
+}
+
+export const clearSignUpErrors = () => {
+  return createAction(actionTypes.CLEAR_SIGN_UP_ERRORS);
+}
+
+export const clearSignInErrors = () => {
+  return createAction(actionTypes.CLEAR_SIGN_IN_ERRORS);
 }
