@@ -8,17 +8,25 @@ import SideBar from "../../components/SideBar";
 import ChatRoom from "../../components/ChatRoom";
 import {useHistory} from "react-router-dom";
 import NotificationContiner from "../../components/Notification";
+import Intro from "../../components/Intro";
+import socket from "../../utils/socketUtils.js";
 import "./style.css";
 
 const Home = () => {
   const currentTheme = useSelector((state) => state.system.currentTheme);
-  const {email} = useSelector(state => state.user);
+  const {email,id} = useSelector(state => state.user);
+  const {currentChatRoomId:currentChatRoom} = useSelector(state => state.room);
   const history = useHistory();
+  useEffect(() => {
+    socket.emit("set-socket-id", {userId:id})
+  },[]);
+  
   if(!email)
     {
       history.push("/signinsignup");
       return (<></>);
     }
+
   const getTheme = () => {
     switch (currentTheme) {
       case "light":
@@ -45,6 +53,7 @@ const Home = () => {
         >
           <SideBar  />
           <ChatRoom />
+          {currentChatRoom === -1 && <Intro />}
           <NotificationContiner />
         </div>
       </div>

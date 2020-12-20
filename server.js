@@ -50,7 +50,6 @@ app.use("/api/users", userRouter);
 //Error Handling
 app.use(function (req, res) {
     res.type('json');
-    console.log(res.errors);
     res.status(400).send({errors:res.errors});
   })
 
@@ -68,7 +67,7 @@ io.on("connect", (socket) => {
         console.log(data);
         io.in(data.room).emit("chat",data.message);
     });
-    socket.on("connected", (data) => {
+    socket.on("set-socket-id", (data) => {
         setSocketId(data,socket.id);
     })
     socket.on("join-room",data => {

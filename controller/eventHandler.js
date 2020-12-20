@@ -73,8 +73,9 @@ export const sendMessage = async (data,socket) => {
 
 export const setSocketId = async (data,socketId) => {
   const {userId} = data;
+  console.log(userId," THIS IS ITT");
   try{
-    await UserModel.findByIdAndUpdate(userId,{socketId});
+    await UserModel.findByIdAndUpdate(mongoose.Types.ObjectId(userId),{socketId});
   }
   catch(err)
     {
@@ -84,6 +85,5 @@ export const setSocketId = async (data,socketId) => {
 }
 
 export const justJoinRoom = (socket,data) => {
-  console.log("debug this out", data.roomId);
   socket.join(data.roomId);
 }

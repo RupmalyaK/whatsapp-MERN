@@ -29,7 +29,12 @@ export const lightTheme = {
             primaryStrong:"#000",
             inverseStrong:"#fff",
             notificationHighlight:"#ff0",
+        },
+        border:{
+            borderStronger:"rgba(0,0,0,0.08)",
+            borderIntro:"#4adf83",
         }  
+
         
     },
     outerBoxShadow:"0 1px 1px 0 rgba(0,0,0,.06),0 2px 5px 0 rgba(0,0,0,.2)",

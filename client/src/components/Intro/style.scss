@@ -1,0 +1,44 @@
+.Intro{
+    flex:0.70;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+.Intro__body{
+display:flex;
+flex-direction: column;
+align-items:center;
+width:500px;
+
+}
+
+.Intro__body__text{
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    flex-direction: column;
+    height:30px;
+    font-size:0.9rem;
+}
+
+.Intro__body__border{
+    height:2px;
+    width:100%;
+    margin-top:50px;
+    margin-bottom:20px;
+}
+
+.Intro__body__extra{
+    align-self:flex-start;
+}
+
+.Intro__footer{
+    width:100%;
+    height:5px;
+    border-top:5px solid black;
+    position:absolute;
+    bottom:0px;
+}

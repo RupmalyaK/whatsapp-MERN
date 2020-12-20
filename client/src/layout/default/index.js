@@ -23,7 +23,6 @@ const Layout = (props) => {
   const joinAllSubscribedRooms = () => {
     if(!chatRooms || chatRooms.length === 0)
       {
-  
         return;
       }
       chatRooms.forEach(room => {

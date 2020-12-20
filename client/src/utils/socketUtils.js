@@ -6,11 +6,6 @@ import { updateUserById } from "../api/usersApi.js";
 
 export const socket = io("http://localhost:5000");
 
-socket.on("connect", async () => {
-  const userId = store.getState().user.id;
-  socket.emit("connected", { userId });
-});
-
 socket.on("msg-sent", (data) => {
   store.dispatch(getNewChatFromSocket(data));
 });
@@ -20,6 +15,7 @@ socket.on("room-created", () => {
 });
 
 socket.on("req-join-room", (roomId) => {
+  alert("dasd");
   store.dispatch(getUserDetail());
   justJoinRoom(roomId);
 });

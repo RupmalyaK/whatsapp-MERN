@@ -31,15 +31,16 @@ router.get("/search/:searchString", isAuthenticated, async (req, res, next) => {
     const allUsers = [...startWith, ...notStartWith];
     res.status(200).json(allUsers.slice(0, 10));
   } catch (err) {
-    console.log(err);
+   // console.log(err);
     next(err);
   }
 });
 
 router.get("/singleuser/:userId", isAuthenticated, async (req, res, next) => {
   const { userId } = req.params;
-
+  
   try {
+
     const user = await UserModel.findById(mongoose.Types.ObjectId(userId))
       .populate({
         path: "chatRooms",
@@ -69,7 +70,7 @@ router.get("/singleuser/:userId", isAuthenticated, async (req, res, next) => {
     });
     res.status(200).json(user);
   } catch (err) {
-    console.log(err);
+  //  console.log(err);
     next(err);
   }
 });
@@ -112,7 +113,7 @@ router.put(
       await user.save();
       res.status(200).json(user);
     } catch (err) {
-      console.log(err);
+    //  console.log(err);
       next(err);
     }
   }

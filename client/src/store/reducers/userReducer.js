@@ -68,6 +68,10 @@ const userReducer = (state = INITIAL_STATE, action) => {
         }
         return true;
       });
+      if(!newChatInRoom)
+        {
+          return {...state};
+        }
       newChatInRoom.chats.push(newChat);
       chatRooms.unshift(newChatInRoom);
       return { ...state, chatRooms };

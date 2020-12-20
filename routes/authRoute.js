@@ -16,7 +16,7 @@ const router = Router();
 router.post(
   "/signup",
   upload.single("profilePic"),
-  signUpValidationMiddlewaresArr,
+ // signUpValidationMiddlewaresArr,
   async (req, res, next) => {
     const { email, password, displayName,socketId } = req.body;
     let profilePic = {
@@ -33,10 +33,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const user = await UserModel.findOne({ email });
-      if (user) {
-        throw new Error("User already exist with that username");
-      }
       const hashPassword = await bcrypt.hash(password, 10);
       const newUser = await UserModel.create({
         email,
