@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "@material-ui/core";
 import "./style.scss";
 import {
@@ -7,6 +7,7 @@ import {
   InsertEmoticon as SmileyIcon,
   AttachFile as AttatchFileIcon,
   Mic as MicIcon,
+  AccountCircle as AccountCircleIcon
 } from "@material-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import ImageWithBuffer from "../ImageFromBuffer";
@@ -25,12 +26,26 @@ const ChatRoom = (props) => {
   const headerIconColor = theme.palette.icon.hederIconColor;
   const [textInput, setTextInput] = useState("");
   const currentRoomId = useSelector((state) => state.room.currentChatRoomId);
-  const currentRoom = useSelector((state) =>
+  const [numberOfChats , setNumberOfChats] = useState(0);
+  const currentRoom = useSelector((state)  =>
     state.user.chatRooms.find((room) => room._id === currentRoomId)
   );
+  const bottomDivRef = useRef(null);
   const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
-  useEffect(() => {}, []);
+
+  useEffect(() => {
+    if(currentRoom && currentRoom.chats.length !== numberOfChats)
+      {
+        setNumberOfChats(currentRoom.chats.length);
+      }
+  })
+  useEffect(() => {
+    if (bottomDivRef.current) {
+      bottomDivRef.current.scrollIntoView();
+    }
+  },[numberOfChats,currentRoom]);
+
   if (!currentRoom) {
     return <></>;
   }
@@ -51,7 +66,6 @@ const ChatRoom = (props) => {
     }
     const showDay = (currentDay, prevDay) => {
       if (currentDay === prevDay) {
-       
         return null;
       }
       return (
@@ -63,20 +77,18 @@ const ChatRoom = (props) => {
         </div>
       );
     };
-    
+
     let previousDay = "";
     const ChatComponents = currentRoom.chats.map((chat) => {
       const date = new Date(chat.time);
       const diffTime = Math.abs(new Date() - date);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      const currentDay = getDay(diffDays,date);
+      const currentDay = getDay(diffDays, date);
       const day = showDay(currentDay, previousDay);
 
-      if(day)
-        {
-        
-          previousDay = currentDay; 
-        }
+      if (day) {
+        previousDay = currentDay;
+      }
       if (userId === chat.sender) {
         return (
           <>
@@ -98,18 +110,18 @@ const ChatRoom = (props) => {
       }
       return (
         <>
-        {day}
-        <div
-          className="chatRoom__body__chats__chat chatRoom__body__chats__chat-other-user"
-          style={{ background: backgroundColor.incommingBackground }}
-        >
-          <span className="chatRoom__body__chats__chat__text chatRoom__body__chats__chat-other-user__text">
-            {chat.text}
-          </span>
-          <span className="chatRoom__body__chats__chat-other-user__time">
-            {date.getHours() + "." + date.getMinutes()}
-          </span>
-        </div>
+          {day}
+          <div
+            className="chatRoom__body__chats__chat chatRoom__body__chats__chat-other-user"
+            style={{ background: backgroundColor.incommingBackground }}
+          >
+            <span className="chatRoom__body__chats__chat__text chatRoom__body__chats__chat-other-user__text">
+              {chat.text}
+            </span>
+            <span className="chatRoom__body__chats__chat-other-user__time">
+              {date.getHours() + "." + date.getMinutes()}
+            </span>
+          </div>
         </>
       );
     });
@@ -124,11 +136,11 @@ const ChatRoom = (props) => {
         style={{ background: backgroundColor.headerBackground }}
       >
         <div className="chatRoom__header__left">
-          <ImageWithBuffer
+         {profileImage.contentType ? <ImageWithBuffer
             className="chatRoom__img"
             contentType={profileImage.contentType}
             arrayBuffer={profileImage.data.data}
-          />
+          /> : <AccountCircleIcon  style={{height:"50px",width:"50px"}}/>}
           <div className="chatRoom__header__left__info">
             <span
               className="chatRoom__header__left__info__name"
@@ -148,7 +160,10 @@ const ChatRoom = (props) => {
         className="chatRoom__body"
         style={{ backgroundImage: `url(./images/chat-background-1.jpg)` }}
       >
-        <div className="chatRoom__body__chats">{showChats()}</div>
+        <div className="chatRoom__body__chats">
+          {showChats()}
+          <div className="chatRoom__body__bottom" ref={bottomDivRef} />
+        </div>
       </div>
       <div
         className="chatRoom__footer"
@@ -168,8 +183,6 @@ const ChatRoom = (props) => {
             if (e.repeat) {
               return;
             }
-      
-
             if (e.key === "Enter") {
               sendMessage();
               setTextInput("");

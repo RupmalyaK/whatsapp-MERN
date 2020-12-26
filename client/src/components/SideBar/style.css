@@ -66,11 +66,23 @@ display:flex;
 align-items:center;
 justify-content:center;
 position:relative;
+height:65px;
+overflow:hidden;
 }
-.sidebar__search-input-wrapper .MuiSvgIcon-root{
+
+.sidebar__search-input-wrapper__iconWrapper{
+    justify-content: flex-start;
+    align-items:flex-start;
+    display:inline;
     position:absolute;
     left:20px;
+}
+
+.sidebar__search-input-wrapper .MuiSvgIcon-root{
+ /*   position:absolute;*/
+    left:20px;
     cursor:pointer;
+    
 }
 
 .sidebar__search-input{
@@ -88,7 +100,15 @@ position:relative;
 .sideBar__chats{
     width:100%;
     height:100%;
+    overflow:Auto;
+    
 }
+
+::-webkit-scrollbar {
+    width: 1px;
+    border-radius:20%;
+  }
+
 
 .sideBar__add__button{
     height:80px;
@@ -108,3 +128,4 @@ position:relative;
     left:20px;
     font-weight: 700;
 }
+

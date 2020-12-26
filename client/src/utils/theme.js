@@ -24,6 +24,8 @@ export const lightTheme = {
             hederIconColor:"#919191",
             addedUserIconNumber:"#1b9a59",
             cameraIconColor:"#25d366",
+            arrowIconColor:"#4fc3f7",
+            iconColor:"#919191",
         },
         text:{
             primaryStrong:"#000",

@@ -1,0 +1,36 @@
+.sidebar__search-input-wrapper{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    height:65px;
+    overflow:hidden;
+    }
+    
+    .sidebar__search-input-wrapper__iconWrapper{
+        justify-content: flex-start;
+        align-items:flex-start;
+        display:inline;
+        position:absolute;
+        left:20px;
+    }
+    
+    .sidebar__search-input-wrapper .MuiSvgIcon-root{
+     /*   position:absolute;*/
+        left:20px;
+        cursor:pointer;
+        
+    }
+    
+    .sidebar__search-input{
+        width:95%;
+        height:70%;
+        border-radius: 18px;
+        border:0px;
+        padding:10px 10px 10px 50px;
+       
+    }
+    .sidebar__search-input:focus{
+            outline: none;
+    }

@@ -10,6 +10,11 @@ import {useHistory} from "react-router-dom";
 import NotificationContiner from "../../components/Notification";
 import Intro from "../../components/Intro";
 import socket from "../../utils/socketUtils.js";
+import {getUserDetail} from "../../store/actions/userAction.js";
+import {updateUserById} from "../../api/usersApi.js";
+import {setCurrentRoom} from "../../store/actions/roomAction.js";
+import {justJoinRoom} from "../../utils/socketUtils.js";
+
 import "./style.css";
 
 const Home = () => {
@@ -17,6 +22,28 @@ const Home = () => {
   const {email,id} = useSelector(state => state.user);
   const {currentChatRoomId:currentChatRoom} = useSelector(state => state.room);
   const history = useHistory();
+
+  const dispatch = useDispatch();
+  const {chatRooms, id:userId }= useSelector(state => state.user);
+
+  const joinAllSubscribedRooms = () => {
+    if(!chatRooms || chatRooms.length === 0)
+      {
+        return;
+      }
+      chatRooms.forEach(room => {
+        justJoinRoom(room._id);
+      });
+  }
+
+  useEffect(() => {
+    dispatch(getUserDetail());
+    dispatch(setCurrentRoom(-1));
+    joinAllSubscribedRooms();
+    updateUserById(userId, {socketId:socket.id});
+  },[]);
+
+
   useEffect(() => {
     socket.emit("set-socket-id", {userId:id})
   },[]);

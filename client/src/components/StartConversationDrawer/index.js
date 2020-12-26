@@ -3,6 +3,8 @@ import { motion, useAnimation } from "framer-motion";
 import { useSelector,useDispatch } from "react-redux";
 import {setCurrentRoom} from "../../store/actions/roomAction";
 import { useTheme } from "@material-ui/core";
+import SearchBar from "../SearchBar";
+import { AccountCircle as AccountCircleIcon } from "@material-ui/icons";
 import "./style.scss";
 import {
   ArrowBack as ArrowBackIcon,
@@ -19,6 +21,7 @@ const StartConversationDrawer = (props) => {
   const [hoverIndex,setHoverIndex ] = useState(-1);  
   const dispatch = useDispatch();
   const theme = useTheme();
+  const [searchInput, setSearchInput] = useState('');
   const { background, text } = theme.palette;
   const drawerOpeningSequence = async () => {
     await drawerControl.start({ x: 0, transition: { duration: "0.5" } });
@@ -50,16 +53,22 @@ const StartConversationDrawer = (props) => {
       if (room.chats.length === 0) {
         const otherUserInfo =
           id === room.users[0]._id ? room.users[1] : room.users[0];
+          if (
+            searchInput &&
+            !otherUserInfo.displayName.match(new RegExp(`${searchInput}`, "i"))
+          ) {
+            return <></>;
+          }
         return (
           <ListGroup.Item className="startConversationDrawer__body__user-info-wrapper" onClick={e => handleCurrentRoomChange(e, room._id)} style={hoverIndex === index ? {
             background:background.chatListBackgroundHover,
           } : {} } onMouseEnter={e => setHoverIndex(index)} onMouseLeave={e => setHoverIndex(-1)}>
             <div className="startConversationDrawer__body__user-info" >
-              <ImageFromBuffer
+             {otherUserInfo.profileImage.contentType ? <ImageFromBuffer
                 className="profileImage"
                 arrayBuffer={otherUserInfo.profileImage.data.data}
                 contentType={otherUserInfo.profileImage.contentType}
-              />
+              /> : <AccountCircleIcon  style={{height:"50px", width:"50px"}} /> }
               <div className="startConversationDrawer__body__user-info__name-and-status" >
                   <h5>{otherUserInfo.displayName}</h5>
                   <p>{status}</p>
@@ -90,23 +99,7 @@ const StartConversationDrawer = (props) => {
         <h4>New chat</h4>
       </div>
       <div className="startConversationDrawer__body">
-        <div
-          className="sidebar__search-input-wrapper"
-          style={{
-            background: background.searchContainerBackground,
-            height: "7%",
-          }}
-        >
-          <SearchIcon />
-          <input
-            className="sidebar__search-input"
-            style={{
-              background: background.searchInputBackground,
-              height: "60%",
-            }}
-            placeholder="search or start a new chat"
-          ></input>
-        </div>
+       <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} placeHolder={"Search user.."}/>
         <div className="startConversationDrawer__body__chatList">
           <ListGroup>{showInactiveChatRooms()}</ListGroup>
         </div>
