@@ -22,6 +22,7 @@
 .env
 secrets.js
 fb_keys.json
+/client/debug.log
 
 npm-debug.log*
 yarn-debug.log*
