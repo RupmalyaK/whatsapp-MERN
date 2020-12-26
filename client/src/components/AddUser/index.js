@@ -3,68 +3,75 @@ import { Modal, Button, ListGroup } from "react-bootstrap";
 import { useTheme } from "@material-ui/core";
 import { Search as SearchIcon } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsersByName,addUserToRoom } from "../../store/actions/userAction.js";
+import {
+  getUsersByName,
+  addUserToRoom,
+} from "../../store/actions/userAction.js";
 import ImageFromBuffer from "../ImageFromBuffer";
 import "./style.scss";
-import {createRoomAndJoinSocket} from "../../utils/socketUtils.js"
+import { createRoomAndJoinSocket } from "../../utils/socketUtils.js";
+import SearchBar from "../SearchBar";
 
 const AddUser = (props) => {
   const [isSearchByName, setIsSearchByName] = useState(true);
   const [searchInput, setSearchInput] = useState("");
   const dispatch = useDispatch();
-  const { searchedUsers,id:userId,friendList } = useSelector((state) => state.user);
+  const { searchedUsers, id: userId, friendList } = useSelector(
+    (state) => state.user
+  );
   const theme = useTheme();
 
   useEffect(() => {
-    dispatch(getUsersByName())
-  },[]);
+    dispatch(getUsersByName());
+  }, []);
 
   const { background, text } = theme.palette;
 
-  const setSearchByNameInput = (e) => {
-    setSearchInput(e.target.value);
-    dispatch(getUsersByName(e.target.value));
+  const setSearchByNameInput = (value) => {
+    setSearchInput(value);
+    dispatch(getUsersByName(value));
   };
 
   const handleAddUserToRoom = (e, otherUserId) => {
-    createRoomAndJoinSocket(userId,otherUserId);
-  }
+    createRoomAndJoinSocket(userId, otherUserId);
+  };
 
   const searchByName = () => {
     return (
       <>
-        <p>
-          <div
-            className="sidebar__search-input-wrapper"
-            style={{
-              background: background.headerBackground,
-              borderRadius: "25px",
-            }}
-          >
-            <SearchIcon />
-            <input
-              className="sidebar__search-input"
-              style={{ background: background.headerBackground }}
-              placeholder="search or start a new chat"
-              onChange={(e) => setSearchByNameInput(e)}
-            ></input>
-          </div>
-        </p>
+        <SearchBar
+          searchInput={searchInput}
+          setSearchInput={setSearchByNameInput}
+          placeHolder={"Search for user by name"}
+        />
+
         <ListGroup>
-            {searchedUsers.map(user => {
-              const otherUserId = user._id;
-              if(userId === otherUserId)
-                {
-                  return (<></>);
-                }
-              return (
-                <div className="addUser__users-list"> 
-                    <ImageFromBuffer arrayBuffer={user.profileImage.data.data} contentType={user.profileImage.contentType} className="addUser__users-list__img"/>
-                    <h5 className="addUser__users-list__name" >{user.displayName}</h5>
-                    <Button className="addUser__users-list__button" variant={friendList[otherUserId] ? "secondary" : "success"} disabled={friendList[otherUserId]}  onClick={e => handleAddUserToRoom(e,user._id)}>{friendList[otherUserId] ? "added" : "add"}</Button>
-                </div>
-              );
-            })}
+          {searchedUsers.map((user) => {
+            const otherUserId = user._id;
+            if (userId === otherUserId) {
+              return <></>;
+            }
+            return (
+              <div className="addUser__users-list">
+                <ImageFromBuffer
+                  arrayBuffer={user.profileImage.data.data}
+                  contentType={user.profileImage.contentType}
+                  className="addUser__users-list__img"
+                />
+                <h5 className="addUser__users-list__name">
+                  {user.displayName}
+                </h5>
+                <Button
+                  className="addUser__users-list__button"
+                  variant={friendList[otherUserId] ? "secondary" : "success"}
+                  disabled={friendList[otherUserId]}
+                  onClick={(e) => handleAddUserToRoom(e, user._id)}
+                >
+                  {friendList[otherUserId] ? "added" : "add"}
+                </Button>
+              </div>
+            );
+          })}
         </ListGroup>
       </>
     );
@@ -72,12 +79,7 @@ const AddUser = (props) => {
   const addByEmail = () => {
     return (
       <>
-        <h4>Add by Email</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
+        <SearchBar searchInput={searchInput} setSearchInput={setSearchByNameInput} placeHolder={"Add user by email"}/>
       </>
     );
   };
@@ -91,7 +93,7 @@ const AddUser = (props) => {
           Add By Email
         </Button>
       </Modal.Header>
-      <Modal.Body style={{ height: "500px", overflow:"auto" }}>
+      <Modal.Body style={{ height: "500px", overflow: "auto" }}>
         {isSearchByName ? searchByName() : addByEmail()}
       </Modal.Body>
     </>

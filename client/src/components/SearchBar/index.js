@@ -19,12 +19,12 @@ const SearchBar = ({searchInput,setSearchInput,placeHolder}) => {
   }, [isSearchFocus]);
 
   const rotateArrow90 = async () => {
-    inputController.start({ width: "100%", height: "95%" });
+    inputController.start({ width: "100%", height: "95%",borderRadius:"0px" });
     await arrowController.start({ rotate: 90 });
   };
 
   const resetArrow = async () => {
-    inputController.start({ height: "70%", width: "95%" });
+    inputController.start({ height: "70%", width: "95%",borderRadius:"18px" });
     return await arrowController.start({
       rotate: 0,
       opacity: 0.5,
