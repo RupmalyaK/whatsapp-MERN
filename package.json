@@ -31,11 +31,11 @@
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/node": "^7.0.0",
-    "@babel/preset-env": "^7.9.6"
+    "@babel/preset-env": "^7.9.6",
+    "dotenv": "^7.0.0"
   },
   "devDependencies": {
  
-    "concurrently": "^4.0.1",
-    "dotenv": "^7.0.0"
+    "concurrently": "^4.0.1"
   }
 }
