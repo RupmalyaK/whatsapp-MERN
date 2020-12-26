@@ -71,6 +71,7 @@ const Home = () => {
         className="home"
         style={{ background: appliedTheme.palette.background.outerBackground, backgroundImage:appliedTheme.palette.background.outerBackgroundImage}}
       >
+          <div className="home__header" style={{background: appliedTheme.palette.background.bannerBackground}} />
         <div
           className="home__body"
           style={{

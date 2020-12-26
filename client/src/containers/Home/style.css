@@ -19,10 +19,15 @@
 .home__body {
   height: 95vh;
   min-width: 600px;
- 
   max-width: 1400px;
   width:100%;
- 
- 
+  z-index:20;
   display:flex;
+}
+
+.home__header{
+  height:127px;
+  width:100%;
+  z-index:0;
+  position:absolute;
 }
