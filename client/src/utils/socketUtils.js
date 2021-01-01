@@ -15,7 +15,6 @@ socket.on("room-created", () => {
 });
 
 socket.on("req-join-room", (roomId) => {
-  alert("dasd");
   store.dispatch(getUserDetail());
   justJoinRoom(roomId);
 });

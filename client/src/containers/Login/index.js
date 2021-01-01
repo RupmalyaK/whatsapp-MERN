@@ -64,7 +64,7 @@ const Login = (props) => {
      history.push('/');
      return (<></>);
   }
-  console.log("this is it", signInErrors);
+
   return(
     <ThemeProvider theme={appliedTheme}>
           <div>

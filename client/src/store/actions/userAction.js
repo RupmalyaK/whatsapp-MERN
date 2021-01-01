@@ -58,10 +58,9 @@ export const signInAsync = (email, password, socketId) => {
   return async (dispatch) => {
   
     try {
-    
       const user = await authApi.login({ email, password, socketId });
-      cookies.set("accesToken", user.accessToken, { expires: 365, path: "/" });
-     
+      console.log(user.accessToken, "this is it");
+      cookies.set("accesToken", user.accessToken, { expires: 365, path:'/'}); 
       dispatch(createAction(actionTypes.SET_USER_DETAIL, user));
     } catch (err) {
       console.log(err);
@@ -79,6 +78,7 @@ export const getUsersByName = (searchString) => {
       const users = await usersApi.getUsersByName(searchString);
       dispatch(createAction(actionTypes.GET_USERS_BY_NAME, users));
     } catch (err) {
+      
       console.log(err);
     }
   };
@@ -99,7 +99,7 @@ export const getUserDetail = () => {
 
 export const signOut = () => {
   return async (dispatch) => {
-    cookies.remove("accessToken");
+    cookies.remove("accesToken",{ path:'/'});
     dispatch(
       createAction(actionTypes.SET_USER_DETAIL, {
         displayName: "",

@@ -5,6 +5,7 @@ import { Router } from "express";
 import mongoose from "mongoose";
 import multer from "multer";
 
+
 const router = Router();
 const upload = multer();
 
@@ -118,4 +119,22 @@ router.put(
     }
   }
 );
+router.get("/getidbyemail/:email", async (req,res,next) => {
+  console.log(req.params.email);
+  try{
+      const user = await UserModel.findOne({email:req.params.email}); 
+      if(!user)
+        {
+          throw new Error("No user exist with this email"); 
+        }
+       res.status(200).json({userId:user._id}); 
+     }
+  catch(err)
+    {
+      console.log(err);
+      next(err);
+    }
+});
+
+
 export default router;

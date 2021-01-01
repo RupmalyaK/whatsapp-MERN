@@ -11,12 +11,15 @@ import ImageFromBuffer from "../ImageFromBuffer";
 import "./style.scss";
 import { createRoomAndJoinSocket } from "../../utils/socketUtils.js";
 import SearchBar from "../SearchBar";
+import {getUserIdByEmail} from "../../api/usersApi.js";
+import Swal from "sweetalert2";
 
 const AddUser = (props) => {
   const [isSearchByName, setIsSearchByName] = useState(true);
   const [searchInput, setSearchInput] = useState("");
+  const [emailInput,setEmailInpuit] = useState('');
   const dispatch = useDispatch();
-  const { searchedUsers, id: userId, friendList } = useSelector(
+  const { searchedUsers, id: userId, friendList,email } = useSelector(
     (state) => state.user
   );
   const theme = useTheme();
@@ -36,6 +39,21 @@ const AddUser = (props) => {
     createRoomAndJoinSocket(userId, otherUserId);
   };
 
+  const findAndAddUserByEmail = async (otherUserEmail) => {
+  if(email === otherUserEmail)
+    {
+      return;
+    }
+  try{
+    const {userId:otherUserId} = await getUserIdByEmail(otherUserEmail);
+    createRoomAndJoinSocket(userId,otherUserId);
+    Swal.fire('Friend request sent.')
+  }
+  catch(err)
+    {
+     Swal.fire("User not found.");
+    }
+  }
   const searchByName = () => {
     return (
       <>
@@ -78,18 +96,19 @@ const AddUser = (props) => {
   };
   const addByEmail = () => {
     return (
-      <>
-        <SearchBar searchInput={searchInput} setSearchInput={setSearchByNameInput} placeHolder={"Add user by email"}/>
-      </>
+      <div style={{display:"flex", flexDirection:"column",alignContent:"center", justifyContent:"flex-start"}}>
+        <SearchBar searchInput={emailInput} setSearchInput={setEmailInpuit} placeHolder={"Add user by email"}/>
+        <Button onClick={e => findAndAddUserByEmail(emailInput)} style={{display:"inline"}} >Add user by email</Button>
+      </div>
     );
   };
   return (
     <>
       <Modal.Header closeButton className="addUser">
-        <Button className="mr-2" onClick={(e) => setIsSearchByName(true)}>
+        <Button className="mr-2" onClick={(e) => setIsSearchByName(true)} variant={isSearchByName ? "primary" : "secondary"}>
           Search By Name
         </Button>
-        <Button variant="secondary" onClick={(e) => setIsSearchByName(false)}>
+        <Button variant={isSearchByName ?  "secondary" :  "primary"} onClick={(e) => setIsSearchByName(false)}>
           Add By Email
         </Button>
       </Modal.Header>

@@ -73,7 +73,7 @@ export const sendMessage = async (data,socket) => {
 
 export const setSocketId = async (data,socketId) => {
   const {userId} = data;
-  console.log(userId," THIS IS ITT");
+
   try{
     await UserModel.findByIdAndUpdate(mongoose.Types.ObjectId(userId),{socketId});
   }

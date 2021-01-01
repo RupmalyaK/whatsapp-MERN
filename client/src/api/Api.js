@@ -24,7 +24,6 @@ function handleError(error) {
 const axios = Create({
   baseURL: "http://localhost:5000/api",
   // timeout: 1000,
-  headers: { authorization: "bearer " + getAuthToken() },
 });
 
 export const getWithCancel = async (url, success, error) => {
@@ -40,6 +39,7 @@ export const getWithCancel = async (url, success, error) => {
       url: url,
       responseType: "application/json",
       cancelToken: window.source.token,
+      headers: { authorization: "bearer " + getAuthToken() },
     });
     success(data);
   } catch (err) {
@@ -53,6 +53,7 @@ export const get = async (url, success, error) => {
       mathod: "get",
       url: url,
       responseType: "application/json",
+      headers: { authorization: "bearer " + getAuthToken() },
     });
     success(data);
   } catch (err) {
@@ -66,6 +67,7 @@ export const deleteApi = async (url, success, error) => {
       mathod: "delete",
       url: url,
       responseType: "application/json",
+      headers: { authorization: "bearer " + getAuthToken() },
     });
     success(data);
   } catch (err) {
@@ -80,6 +82,7 @@ export const post = async (url, reqData, success, error) => {
       url: url,
       data: reqData,
       responseType: "application/json",
+      headers: { authorization: "bearer " + getAuthToken() },
     });
     success(data);
   } catch (err) {
@@ -94,6 +97,7 @@ export const put = async (url, reqData, success, error) => {
       url: url,
       data: reqData,
       responseType: "application/json",
+      headers: { authorization: "bearer " + getAuthToken() },
     });
     success(data);
   } catch (err) {

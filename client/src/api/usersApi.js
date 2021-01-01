@@ -13,6 +13,10 @@ export const updateUserById = (userId, user) => {
  const url = `/users/updateuser/${userId}`;
  return PutRequest(url,user);
 }
+export const getUserIdByEmail = (email) => {
+  const url = `/users/getidbyemail/${email}`;
+  return GetRequest(url);
+}
 
 const GetRequest = (url) => {
   return new Promise(function (resolve, reject) {

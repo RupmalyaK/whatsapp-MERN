@@ -87,6 +87,7 @@ router.post("/signin", async (req, res, next) => {
       throw "Wrong password";
     }
     const doc = user._doc;
+    console.log(process.env.JWT_SECRET, "signin");
     const accessToken = await jwt.sign(
       { email, password },
       process.env.JWT_SECRET,
