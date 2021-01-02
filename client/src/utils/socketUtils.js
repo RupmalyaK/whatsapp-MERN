@@ -4,7 +4,7 @@ import { getNewChatFromSocket } from "../store/actions/roomAction.js";
 import { getUserDetail } from "../store/actions/userAction.js";
 import { updateUserById } from "../api/usersApi.js";
 
-export const socket = io("http://localhost:5000");
+export const socket = io("/");
 
 socket.on("msg-sent", (data) => {
   store.dispatch(getNewChatFromSocket(data));

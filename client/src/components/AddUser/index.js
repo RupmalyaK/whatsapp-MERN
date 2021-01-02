@@ -64,7 +64,7 @@ const AddUser = (props) => {
         />
 
         <ListGroup>
-          {searchedUsers.map((user) => {
+          {Array.isArray(searchedUsers) && searchedUsers.map((user) => {
             const otherUserId = user._id;
             if (userId === otherUserId) {
               return <></>;

@@ -31,21 +31,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({"extended":true}));
 app.use(cors());
 
-/*PRODUCTION CONFIG*/
 
-if(process.env.NODE_ENV ==="production")
-    {   
-        app.use(express.static(path.join(__dirname, "client/build")));
 
-       app.get('/', (req, res) => {
-            res.sendFile(path.join(__dirname, "client/build" , "index.html"));
-        });
-    }
+
 
 /*EXPRESS ROUTES */
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 
+/**Static files*/
+
+if(process.env.NODE_ENV ==="production")
+    {   
+        app.use(express.static(path.join(__dirname, "client/build")));
+
+       app.get('/*', (req, res) => {
+            res.sendFile(path.join(__dirname, "client/build" , "index.html"));
+        });
+    }
 
 //Error Handling
 app.use(function (req, res) {

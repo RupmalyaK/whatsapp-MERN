@@ -36,7 +36,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         _id: id,
         prevStatus,
         prevDisplayName,
-        friendList,
+        friendList
       } = payLoad;
       return {
         ...state,
