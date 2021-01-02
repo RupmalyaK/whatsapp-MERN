@@ -16,8 +16,15 @@ const createAction = (type, payLoad) => {
 };
 
 export const signUpAsync = (formData) => {
-  return async (dispatch) => {
+  return async (dispatch,getState) => {
     try {
+    
+      const isSigningUp = getState().user.isSigningUp;
+      if(isSigningUp)
+        {
+          return;
+        }
+       dispatch(createAction(actionTypes.IS_SIGNING_UP));
       const user = await authApi.signup(formData);
       cookies.set("accesToken", user.accessToken, { expires: 365, path: "/" });
       user.friendList = arrayToMap(user.friendList);
