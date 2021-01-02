@@ -22,7 +22,7 @@ function handleError(error) {
 }
 
 const axios = Create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "/api",
   // timeout: 1000,
 });
 
