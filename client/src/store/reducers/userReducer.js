@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   signUpErrors:null,
   signInErrors:null,
   isSigningUp:false,
+  isSearchingUsers:false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -56,7 +57,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case actionTypes.GET_USERS_BY_NAME:
-      return { ...state, searchedUsers: payLoad };
+      return { ...state, searchedUsers: payLoad, isSearchingUsers:false };
 
     case actionTypes.GET_MESSAGE: {
       const { roomIndex, roomId, ...newChat } = payLoad;
@@ -105,15 +106,19 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {...state,chatRooms};
     }
     case actionTypes.SET_SIGN_UP_ERRORS:
-      return {...state,signUpErrors:payLoad,isSigningUp:false}
+      return {...state,signUpErrors:payLoad,isSigningUp:false};
     case actionTypes.CLEAR_SIGN_UP_ERRORS:
-      return {...state, signUpErrors:null,isSigningUp:false}
+      return {...state, signUpErrors:null,isSigningUp:false};
     case actionTypes.SET_SIGN_IN_ERRORS:
       return {...state,signInErrors:payLoad};
     case actionTypes.CLEAR_SIGN_IN_ERRORS:
       return {...state,signInErrors:null}
     case actionTypes.IS_SIGNING_UP:
-      return {...state,isSigningUp:true}  
+      return {...state,isSigningUp:true};  
+    case actionTypes.SET_IS_SEARCHING_USERS:
+      return {...state, isSearchingUsers:true};
+    case actionTypes.UNSET_IS_SEARCHING_USERS:
+      return {...state,isSearchingUsers:false};   
     default:
       return state;
   }

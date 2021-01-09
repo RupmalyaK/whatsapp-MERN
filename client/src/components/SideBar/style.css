@@ -111,11 +111,11 @@ overflow:hidden;
 
 
 .sideBar__add__button{
-    height:80px;
     width:100%;
     cursor:pointer;
     font-size:1.5rem;
     border:none;
+    
 }
 
 .sideBar__header__right__container{

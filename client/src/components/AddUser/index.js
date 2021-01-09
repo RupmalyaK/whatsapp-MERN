@@ -19,7 +19,7 @@ const AddUser = (props) => {
   const [searchInput, setSearchInput] = useState("");
   const [emailInput,setEmailInpuit] = useState('');
   const dispatch = useDispatch();
-  const { searchedUsers, id: userId, friendList,email } = useSelector(
+  const { searchedUsers, id: userId, friendList,email,isSearchingUsers } = useSelector(
     (state) => state.user
   );
   const theme = useTheme();
@@ -62,8 +62,8 @@ const AddUser = (props) => {
           setSearchInput={setSearchByNameInput}
           placeHolder={"Search for user by name"}
         />
-
-        <ListGroup>
+        {isSearchingUsers ?  <div className="addUser__loader" style={{borderTopColor:background.buttonBackground}}/> : <></>}
+       {isSearchingUsers || <ListGroup>
           {Array.isArray(searchedUsers) && searchedUsers.map((user) => {
             const otherUserId = user._id;
             if (userId === otherUserId) {
@@ -90,7 +90,7 @@ const AddUser = (props) => {
               </div>
             );
           })}
-        </ListGroup>
+        </ListGroup>}
       </>
     );
   };
@@ -112,7 +112,7 @@ const AddUser = (props) => {
           Add By Email
         </Button>
       </Modal.Header>
-      <Modal.Body style={{ height: "500px", overflow: "auto" }}>
+      <Modal.Body style={{ height: "500px", overflow: "auto",position:"relative" }}>
         {isSearchByName ? searchByName() : addByEmail()}
       </Modal.Body>
     </>

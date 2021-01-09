@@ -20,6 +20,8 @@ export const lightTheme = {
             incommingBackground:"#fff",
             systemMessageBackground:"rgba(225,245,254,0.92)",
             bannerBackground:"#009688",
+            buttonBackground:"#009688",
+            buttonBackgroundHover:"#00bfa5",
         },
         icon:{
             hederIconColor:"#919191",

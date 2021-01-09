@@ -27,6 +27,7 @@ const SideBar = (props) => {
   const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
   const [isSidebarDropdownOpen, setIsSidebarDropdownOpen] = useState(false);
   const [addedUserNumber, setAddedUserNumber] = useState(0);
+  const [isAddButtonHovering, setIsAddButtonHovering] = useState(false);
   const dropDownRef = useRef();
   const [searchInput, setSearchInput] = useState("");
 
@@ -194,9 +195,12 @@ const SideBar = (props) => {
         <Button
           className="sideBar__add__button"
           onClick={(e) => setIsAddUserModalOpen(true)}
+          onMouseEnter={e => setIsAddButtonHovering(true)}
+          onMouseLeave={e => setIsAddButtonHovering(false)}
           style={{
-            background: background.headerBackground,
-            color: text.primaryStrong,
+            background:isAddButtonHovering ? background.buttonBackgroundHover : background.buttonBackground,
+            color: text.inverseStrong,
+            height:"50px"
           }}
         >
           Add user
