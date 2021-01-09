@@ -86,7 +86,7 @@ export const getUsersByName = (searchString) => {
       const users = await usersApi.getUsersByName(searchString);
       dispatch(createAction(actionTypes.GET_USERS_BY_NAME, users));
     } catch (err) {
-      dispatch(createAction(actionTypes.UNSET_IS_SEARCHING_USERS));
+    //  dispatch(createAction(actionTypes.UNSET_IS_SEARCHING_USERS));
       console.log(err);
     }
   };
